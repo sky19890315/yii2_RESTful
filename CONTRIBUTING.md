@@ -1,1 +1,3 @@
+所有提交到dev分支并发起合并请求的，我会仔细check and review
+
 提交bug或者优化方案
