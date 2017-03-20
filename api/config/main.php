@@ -7,33 +7,32 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-backend',
+    'id' => 'app-api',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
+    'controllerNamespace' => 'api\controllers',
     'bootstrap' => ['log'],
-    
-    
     'modules' => [
+        //增加v1类支持
         'v1' => [
             'class' => 'api\modules\v1\Module',
-        ]
-        
+        ],
     ],
     'components' => [
-        //增加用户授权
+        //增加响应格式
+        'response' => [
+            'format' => 'json'
+        ],
+        'request' => [
+            'csrfParam' => '_csrf-api',
+        ],
         'user' => [
             'identityClass' => 'common\models\User',
-        'enableAutoLogin' => true,
-        'enableSession' => false,
+            'enableAutoLogin' => true,
+            'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
         ],
-        /*+++++++++++++++++++----*/
-        'request' => [
-            'csrfParam' => '_csrf-backend',
-        ],
-        //delete
         'session' => [
-            // this is the name of the session cookie used for login on the backend
-            'name' => 'advanced-backend',
+            // this is the name of the session cookie used for login on the api
+            'name' => 'advanced-api',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -47,25 +46,19 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*增加路由美化功能*/
+        //restful路由美化功能开启
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableStrictParsing' =>true,
+            'enablePrettyUrl'       => true,
+            'showScriptName'        => false,
+            'enableStrictParsing'   => true,
             'rules' => [
                 [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => ['v1/goods'],
-                    
-                ],
-                
+                'class'         =>  'yii\rest\UrlRule',
+                'controller'    =>  ['v1/cars'],
+                ]
             ],
         ],
-        
-        
-        
-        
-        
+
     ],
     'params' => $params,
 ];

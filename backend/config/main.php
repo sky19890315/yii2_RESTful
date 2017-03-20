@@ -13,13 +13,25 @@ return [
     'bootstrap' => ['log'],
     'modules' => [],
     'components' => [
+        //增加
+        'assetManager' => [
+            'bundles' => [
+                'dmstr\web\AdminLteAsset' => [
+                    'skin' => 'skin-red',
+                ],
+            ],
+        ],
+        //以上为增加
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
+        
+        //修改用户验证机制
         'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            //修改默认类
+            'identityClass'     =>      'backend\models\UserBackend',
+            'enableAutoLogin'   =>      true,
+           // 'identityCookie'    =>      ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend

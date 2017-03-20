@@ -1,28 +1,28 @@
 <?php
 
-namespace api\models;
+namespace backend\models;
 
 use Yii;
 
 /**
- * This is the model class for table "user".
+ * This is the model class for table "user_backend".
  *
  * @property integer $id
  * @property string $username
- * @property string $api_token
+ * @property string $auth_key
  * @property string $password_hash
  * @property string $email
  * @property string $created_at
  * @property string $updated_at
  */
-class User extends \yii\db\ActiveRecord
+class UserBackendSearch extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'user';
+        return 'user_backend';
     }
 
     /**
@@ -31,9 +31,10 @@ class User extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['username', 'api_token', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
-            [['username', 'api_token', 'password_hash', 'email'], 'string', 'max' => 255],
+            [['username', 'password_hash', 'email'], 'string', 'max' => 255],
+            [['auth_key'], 'string', 'max' => 32],
             [['username'], 'unique'],
             [['email'], 'unique'],
         ];
@@ -47,7 +48,7 @@ class User extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'username' => 'Username',
-            'api_token' => 'Api Token',
+            'auth_key' => 'Auth Key',
             'password_hash' => 'Password Hash',
             'email' => 'Email',
             'created_at' => 'Created At',
