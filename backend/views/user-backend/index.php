@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'User Backends';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-backend-index">
 
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create User Backend', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('添加新用户', ['signup'], ['class' => 'btn btn-success']) ?>
     </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -29,8 +30,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'auth_key',
             'password_hash',
             'email:email',
-            // 'created_at',
-            // 'updated_at',
+            'created_at',
+            'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

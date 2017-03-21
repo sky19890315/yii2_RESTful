@@ -22,8 +22,12 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+	                    // 当前rule将会针对这里设置的actions起作用，如果actions不设置，默认就是当前控制器的所有操作
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'signup'],
+	                    // 设置actions的操作是允许访问还是拒绝访问
                         'allow' => true,
+	                    // @ 当前规则针对认证过的用户; ? 所有方可均可访问
+	                    'roles' => ['@'],
                     ],
                     [
                         'actions' => ['logout', 'index'],
@@ -70,14 +74,21 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+    	//判断是否是认证用户
         if (!Yii::$app->user->isGuest) {
+        	//直接去后台
             return $this->goHome();
         }
-
+		
+        //调用前段登录模型
         $model = new LoginForm();
+        
+        //接收表单数据并调用登录方法
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
+        	
+        	//已经登录用户直接调用登录表单
             return $this->render('login', [
                 'model' => $model,
             ]);

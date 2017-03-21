@@ -44,6 +44,7 @@ class Blog extends \yii\db\ActiveRecord
             'title' => 'Title',
             'content' => 'Content',
             'create_time' => 'Create Time',
+	        
         ];
     }
 }

@@ -60,6 +60,10 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
     }
     
     //增加 根据接口获取用户
+	/**
+	 * @param int|string $id
+	 * @return static
+	 */
 	public static function findIdentity ($id)
 	{
 		// TODO: Implement findIdentity() method.
@@ -67,6 +71,11 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 	
 	//根据accesss_token获取用户信息
+	/**
+	 * @param mixed $token
+	 * @param null  $type
+	 * @throws NotSupportedException
+	 */
 	public static function findIdentityByAccessToken ($token, $type = null)
 	{
 		// TODO: Implement findIdentityByAccessToken() method.
@@ -75,6 +84,9 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 	
 	//标识获取id
+	/**
+	 * @return mixed
+	 */
 	public function getId ()
 	{
 		// TODO: Implement getId() method.
@@ -82,6 +94,9 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 	
 	//获取认证密钥
+	/**
+	 * @return string
+	 */
 	public function getAuthKey ()
 	{
 		// TODO: Implement getAuthKey() method.
@@ -89,11 +104,52 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 	}
 	
 	//验证密钥
+	/**
+	 * @param string $authKey
+	 * @return bool
+	 */
 	public function validateAuthKey ($authKey)
 	{
 		// TODO: Implement validateAuthKey() method.
 		return $this->getAuthKey() === $authKey;
 	}
 	
+	//用哈希算法加密
+	/**
+	 * @param $password
+	 */
+	public function setPassword($password)
+	{
+		$this->password_hash = Yii::$app->security->generatePasswordHash($password);
+	}
+	
+	//增加生成key
+	/**
+	 * 秘钥
+	 */
+	public function generateAuthKey()
+	{
+		$this->auth_key = Yii::$app->security->generateRandomString();
+	}
+	
+	/**
+	 * 根据用户表获取用户信息
+	 * @param $username
+	 * @return static
+	 */
+	public static function findByUsername($username)
+	{
+		return static::findOne(['username' => $username]);
+	}
+	
+	/**
+	 * 验证经过hash算法加密后的密码
+	 * @param $password
+	 * @return bool
+	 */
+	public function validatePassword($password)
+	{
+		return Yii::$app->security->validatePassword($password, $this->password_hash);
+	}
 	
 }

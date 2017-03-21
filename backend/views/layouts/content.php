@@ -1,4 +1,6 @@
 <?php
+
+use Yii;
 use yii\widgets\Breadcrumbs;
 use dmstr\widgets\Alert;
 
@@ -21,7 +23,7 @@ use dmstr\widgets\Alert;
             </h1>
         <?php } ?>
 
-        <?=
+        <?php
         Breadcrumbs::widget(
             [
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
@@ -31,7 +33,9 @@ use dmstr\widgets\Alert;
 
     <section class="content">
         <?= Alert::widget() ?>
-        <?= $content ?>
+        <?/*= $content */
+        echo $content;
+        ?>
     </section>
 </div>
 
