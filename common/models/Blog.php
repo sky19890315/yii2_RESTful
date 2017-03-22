@@ -10,7 +10,10 @@ use Yii;
  * @property integer $id
  * @property string $title
  * @property string $content
- * @property string $create_time
+ * @property integer $views
+ * @property integer $is_delete
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Blog extends \yii\db\ActiveRecord
 {
@@ -28,8 +31,10 @@ class Blog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id', 'content', 'created_at', 'updated_at'], 'required'],
+            [['id', 'views', 'is_delete'], 'integer'],
             [['content'], 'string'],
-            [['create_time'], 'safe'],
+            [['created_at', 'updated_at'], 'safe'],
             [['title'], 'string', 'max' => 100],
         ];
     }
@@ -43,7 +48,10 @@ class Blog extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'content' => 'Content',
-            'create_time' => 'Create Time',
+            'views' => 'Views',
+            'is_delete' => 'Is Delete',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 }

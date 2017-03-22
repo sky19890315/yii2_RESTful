@@ -31,8 +31,11 @@ return [
         ],
         'user' => [
             'identityClass' => 'common\models\User',
+	        //启用自动登录功能
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-apidev', 'httpOnly' => true],
+	        //关闭session功能
+	        'enableSession' =>  false,
         ],
         'session' => [
             // this is the name of the session cookie used for login on the apidev
@@ -65,8 +68,13 @@ return [
                 //配置restful
                 [
                 'class' => 'yii\rest\UrlRule',
-                'controller' => ['v1/cars'],
-                
+                'controller' => ['v1/user'],
+                //增加额外的模式
+	                'extraPatterns'     => [
+	                'POST Login'        =>      'login',
+		                //仅用于添加测试用户
+		            'GET signup-test'   =>      'signup-test',
+	                ],
                 ]
             ],
         ],

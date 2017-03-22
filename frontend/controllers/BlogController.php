@@ -2,8 +2,6 @@
 
 namespace frontend\controllers;
 
-//增加调用
-use frontend\models\BlogForm;
 use Yii;
 use common\models\Blog;
 use common\models\BLogSearch;
@@ -65,22 +63,11 @@ class BlogController extends Controller
      */
     public function actionCreate()
     {
-        //实例化前端类
-        $model = new BlogForm();
-        //判断是否为post提交，且验证有效  才以下内容执行
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //满足是通过post提交 且验证有效的情况下 执行以下操作
-            //避免重复验证
-            if ($model->save(false)){
-                //重定向到显示层
-                return $this->redirect(['index']);
-            }
-            
-           
+        $model = new Blog();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         } else {
-            //打印错误信息 并重新创建
-            print_r($model->errors);
-            
             return $this->render('create', [
                 'model' => $model,
             ]);

@@ -25,6 +25,7 @@ class User extends ActiveRecord implements IdentityInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
+	
 
 
     /**
@@ -186,4 +187,34 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+	
+	/**
+	 * 生成密钥
+	 */
+    public function generateApiToken()
+    {
+    	//拼接生成的api
+    	$this->api_token = Yii::$app->security->generateRandomString().'_'.time();
+    }
+	
+	/**
+	 * 检验token是否有效
+	 * @param $token
+	 * @return bool
+	 */
+    public static function apiTokenIsValid($token)
+    {
+    	if (empty($token)){
+    		return false;
+	    }
+	    
+	    //强制转换成整型 返回首次出现下划线的位置
+	    $timestamp = (int) substr($token, strripos($token, '_') +1);
+    	$expire = Yii::$app->params['user.apiTokenExpire'];
+    	
+    	return $timestamp + $expire >= time();
+    }
+    
+
+    
 }

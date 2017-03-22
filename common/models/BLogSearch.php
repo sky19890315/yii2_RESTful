@@ -2,7 +2,6 @@
 
 namespace common\models;
 
-use frontend\models\BlogForm;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
@@ -11,7 +10,7 @@ use common\models\Blog;
 /**
  * BLogSearch represents the model behind the search form about `common\models\Blog`.
  */
-class BLogSearch extends BlogForm
+class BLogSearch extends Blog
 {
     /**
      * @inheritdoc
@@ -19,8 +18,8 @@ class BLogSearch extends BlogForm
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'content', 'create_time'], 'safe'],
+            [['id', 'views', 'is_delete'], 'integer'],
+            [['title', 'content', 'created_at', 'updated_at'], 'safe'],
         ];
     }
 
@@ -42,8 +41,7 @@ class BLogSearch extends BlogForm
      */
     public function search($params)
     {
-        //$query = Blog::find();
-        $query = BlogForm::find();
+        $query = Blog::find();
 
         // add conditions that should always apply here
 
@@ -62,7 +60,10 @@ class BLogSearch extends BlogForm
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'create_time' => $this->create_time,
+            'views' => $this->views,
+            'is_delete' => $this->is_delete,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
