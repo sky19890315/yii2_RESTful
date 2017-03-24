@@ -7,11 +7,35 @@ $params = array_merge(
 );
 
 return [
+	
+	//尝试修改默认路由
+	//'defaultRoute'  =>  'index/index',
+	//以上为选择默认控制器IndexController下的index方法
+	
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+    	//增加后台部分模块
+	    'module' => [
+		    'class' => 'backend\modules\Module',
+	    ],
+	    
+	    //增加后台模块管理
+	    'admin' =>  [
+	        'class' =>  'mdm\admin\Module',
+	    ],
+	    
+	    //设置别名
+	    'aliases'   =>  [
+	        '@mdm/admin'    =>  '@vendor/mdmsoft/yii2-admin',
+	    ],
+	    
+	    
+	    
+	    
+    ],
     'components' => [
         //增加
         'assetManager' => [
@@ -22,6 +46,24 @@ return [
             ],
         ],
         //以上为增加
+	    
+	    //增加认证管理↓
+	    'authManager'       =>  [
+	    	'class'         =>  'yii\rbac\DbManager',
+		    'defaultRoles'  =>  ['guest'],
+	    ],
+	    //增加认证管理↑
+	    
+	    'as access'         =>  [
+	    	'class'         =>  'mdm\admin\components\AccessControl',
+		    'allowActions'  =>  [
+		        //存放允许访问的action
+			    //controller/action
+			    '*',
+		    ],
+	    ],
+	    
+	    
         'request' => [
             'csrfParam' => '_csrf-backend',
         ],
@@ -49,14 +91,22 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
+        
+	    
+	    //20170324修改路由管理功能
+        'urlManager'                => [
+        	//是否启用路由美化
+            'enablePrettyUrl'                   => true,
+	        //是否忽略index.php
+            'showScriptName'                    => false,
+	        //是否启用严格脚本解析
+	        'enableStrictParsing'               => false,
             'rules' => [
+	        '<controller:\w+>/<action:\w+>'     =>  '<controller>/<action>',
+	        //'suffix' => '.html',
             ],
         ],
-        */
+        
     ],
     'params' => $params,
 ];

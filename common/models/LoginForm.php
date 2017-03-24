@@ -2,9 +2,10 @@
 namespace common\models;
 
 use Yii;
-use yii\base\Model;
-//调用登录设置
+
+//调用登录设置  将user设置为后台的user
 use backend\models\UserBackend as User;
+use yii\base\Model;
 
 /**
  * Login form
@@ -52,7 +53,7 @@ class LoginForm extends Model
 	        // 这个我们下面会在UserBackend方法里增加
             if (!$user || !$user->validatePassword($this->password)) {
             	//验证失败返回信息
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, '用户名或者密码错误，请重试！.');
             }
         }
     }

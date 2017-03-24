@@ -17,6 +17,49 @@ class SiteController extends Controller
      */
     public function behaviors()
     {
+    	//修复无法登录的问题 ↓ 已可以正常登录
+	    return [
+	    	'access'        =>  [
+	    	    'class'     =>  AccessControl::className(),
+			    //验证规则1 做登录验证
+			    //当前规则将会针对这里设置的actions起作用，如果actions不设置
+			    //默认就是当前控制器的所有动作
+			    'rules'     =>  [
+			    	[
+			    //actions和allow就是 AccessRule的属性
+				//20170324增加验证规则 index view create update delete signup  ---sky
+			    //'actions' =>  ['login', 'error'],  20170324 --sky 替代如下
+				/*注意 -- 修改规则后导致无法登录。即无法访问登录页面 故增加login和 error路由*/
+				'actions'   =>  ['index', 'view', 'create', 'update', 'create', 'signup', 'login', 'error'],
+				//符合以上规则允许访问
+			    'allow'     =>  true,
+				//设置角色 @ --表示当前规则针对认证过的用户	 ？ --表示所有用户均可访问
+		            ],
+			    //验证规则2 做退出登录
+				    [
+				'actions'   =>  ['logout', 'index'],
+				'allow'     =>  true,
+				//角色
+				'roles'     =>  ['@'],
+				    ],
+			    ],
+	    ], //access结束
+		    //动词
+		    'verbs'         =>  [
+		        'class'     =>  VerbFilter::className(),
+			    'actions'   =>  [
+			    'logout'    =>  ['post'],
+			    ],
+		    ],
+		    ];
+	    
+	    //修复无法登录的问题↑
+    	
+    	
+    	
+    	
+    	//后期增加路由控制需要的部分 可以先注释掉
+	    /*
         return [
             'access' => [
                 'class' => AccessControl::className(),
@@ -29,10 +72,12 @@ class SiteController extends Controller
 	                    // @ 当前规则针对认证过的用户; ? 所有方可均可访问
 	                    'roles' => ['@'],
                     ],
+						//修改认证方式 20170322
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['index'],
                         'allow' => true,
-                        'roles' => ['@'],
+	                    //允许操作的action 动词 POST
+                        'verbs' => ['POST'],
                     ],
                 ],
             ],
@@ -43,6 +88,7 @@ class SiteController extends Controller
                 ],
             ],
         ];
+        */
     }
 
     /**
@@ -64,14 +110,16 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-    	$this->render('index');
+    	
+    	return $this->render('index');
     }
-
-    /**
-     * Login action.
-     *
-     * @return string
-     */
+	
+	/**
+	 * 登录操作
+	 * 点击后台后调用site控制器的login方法
+	 * @return string|\yii\web\Response
+	 *
+	 */
     public function actionLogin()
     {
     	//判断是否是认证用户

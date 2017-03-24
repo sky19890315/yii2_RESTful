@@ -1,7 +1,13 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: s
-	 * Date: 17-3-21
-	 * Time: 下午6:11
-	 */
+	namespace backend\components;
+	
+	use Yii;
+	
+	class MyBehavior extends \yii\base\ActionFilter
+	{
+		public function beforeAction ($action)
+		{
+			var_dump(222222);
+			return true;
+		}
+	}

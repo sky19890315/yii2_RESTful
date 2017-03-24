@@ -55,4 +55,5 @@ class UserBackendSearch extends \yii\db\ActiveRecord
             'updated_at' => 'Updated At',
         ];
     }
+
 }

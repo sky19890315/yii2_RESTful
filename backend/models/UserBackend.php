@@ -5,6 +5,7 @@ namespace backend\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\web\IdentityInterface;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "user_backend".
@@ -18,7 +19,7 @@ use yii\web\IdentityInterface;
  * @property string $updated_at
  * 调用接口来实现
  */
-class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
+class UserBackend extends ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -45,6 +46,7 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 
     /**
      * @inheritdoc
+     * 显示表的信息 如果有备注显示备注
      */
     public function attributeLabels()
     {
@@ -59,33 +61,33 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
         ];
     }
     
-    //增加 根据接口获取用户
+   
 	/**
+	 * 增加 根据接口获取用户
 	 * @param int|string $id
 	 * @return static
 	 */
 	public static function findIdentity ($id)
 	{
-		// TODO: Implement findIdentity() method.
 		return static::findOne(['id' => $id]);
 	}
 	
-	//根据accesss_token获取用户信息
+	
 	/**
 	 * @param mixed $token
 	 * @param null  $type
 	 * @throws NotSupportedException
+	 * 根据accesss_token获取用户信息
 	 */
 	public static function findIdentityByAccessToken ($token, $type = null)
 	{
-		// TODO: Implement findIdentityByAccessToken() method.
 		//暂时先不启用 直接抛出异常 暂时不提供这个方法
 		throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
 	}
 	
-	//标识获取id
 	/**
 	 * @return mixed
+	 * 标识获取id
 	 */
 	public function getId ()
 	{
@@ -93,30 +95,31 @@ class UserBackend extends \yii\db\ActiveRecord implements IdentityInterface
 		return $this->getPrimaryKey();
 	}
 	
-	//获取认证密钥
 	/**
 	 * @return string
+	 *
+	 * 获取认证密钥
 	 */
 	public function getAuthKey ()
 	{
-		// TODO: Implement getAuthKey() method.
 		return $this->auth_key;
 	}
 	
-	//验证密钥
 	/**
 	 * @param string $authKey
 	 * @return bool
+	 *
+	 * 验证密钥
 	 */
 	public function validateAuthKey ($authKey)
 	{
-		// TODO: Implement validateAuthKey() method.
 		return $this->getAuthKey() === $authKey;
 	}
 	
-	//用哈希算法加密
 	/**
 	 * @param $password
+	 *
+	 * 用哈希算法加密
 	 */
 	public function setPassword($password)
 	{

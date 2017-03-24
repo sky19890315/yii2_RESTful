@@ -20,6 +20,15 @@ class BlogController extends Controller
     public function behaviors()
     {
         return [
+        	//测试附加
+	        //'myBehavior' => \backend\components\MyBehavior::className(),
+	        //测试附加↑
+	        
+	        //新的行为类
+	        'as access' =>  [
+	        	'class' =>  'backend\components\AccessControl',
+	        ],
+	        
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -35,13 +44,26 @@ class BlogController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new BLogSearch();
+    	//测试功能
+	    if (!Yii::$app->user->can('/blog/index')){
+	    	throw new \yii\web\ForbiddenHttpException('没有权限访问.');
+	    }
+	    
+	    $searchModel = new BLogSearch();
+	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+	    return $this->render('index', [
+	    	'searchModel'   =>  $searchModel,
+		    'dataProvider'  =>  $dataProvider,
+	    ]);
+	    
+    	
+       /* $searchModel = new BLogSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-        ]);
+        ]);*/
     }
 
     /**

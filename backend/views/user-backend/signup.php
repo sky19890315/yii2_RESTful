@@ -6,7 +6,7 @@
     $this->params['breadcrumbs'][] = $this->title;
 ?>
     
-<div class="site-signup" style="background-color: #00a7d0">
+<div class="site-signup" style="background-color: #f7e1b5">
     <div class="row">
         <div class="col-lg-5">
           <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
