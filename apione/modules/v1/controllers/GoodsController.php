@@ -19,8 +19,6 @@ class GoodsController extends ActiveController
 		$behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
 		return $behaviors;
 		
-		//授权认证
-		
 		
 		
 	}

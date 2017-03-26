@@ -77,13 +77,15 @@ return [
                 //配置restful
                 [
                 'class' => 'yii\rest\UrlRule',
-                'controller' =>  ['v1/goods'],
+                'controller' =>  [['v1/goods'],['v1/stationinfos']],
                 //增加额外的模式
-	                'extraPatterns'     => [
+	               
+	               /*  'extraPatterns'     => [
 	                'POST Login'        =>      'login',
 		                //仅用于添加测试用户
 		            'GET signup-test'   =>      'signup-test',
 	                ],
+	                */
                 ]
             ],
         ],

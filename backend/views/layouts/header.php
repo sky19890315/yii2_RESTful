@@ -139,7 +139,7 @@ use yii\helpers\Html;
                                 </li>
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">查看全部通知</a></li>
+                        <li class="footer"><a href="#"></a></li>
                     </ul>
                 </li>
                 <!-- Tasks: style can be found in dropdown.less -->
@@ -228,18 +228,18 @@ use yii\helpers\Html;
 
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <img src="<?= $directoryAsset ?>/img/test.gif" class="user-image" alt="User Image"/>
+                        <span class="hidden-xs">超级管理员</span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
                         <li class="user-header">
-                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                            <img src="<?= $directoryAsset ?>/img/test.gif" class="img-circle"
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
-                                <small>Member since Nov. 2012</small>
+                                上班不敢打酱油
+                                <small>加班加班加班</small>
                             </p>
                         </li>
                         <!-- Menu Body -->
