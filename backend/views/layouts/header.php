@@ -25,76 +25,24 @@ use yii\helpers\Html;
                         <span class="label label-success">4</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">你有四条消息</li>
+                        <li class="header">你有N条消息</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li><!-- start message -->
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle"
+                                            <img src="<?= $directoryAsset ?>/img/test.gif" class="img-circle"
                                                  alt="User Image"/>
                                         </div>
                                         <h4>
-                                            Support Team
+                                            预留功能区
                                             <small><i class="fa fa-clock-o"></i> 5 mins</small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p>上班没有打酱油</p>
                                     </a>
                                 </li>
                                 <!-- end message -->
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            设计团队
-                                            <small><i class="fa fa-clock-o"></i> 2 hours</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Developers
-                                            <small><i class="fa fa-clock-o"></i> Today</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user3-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Sales Department
-                                            <small><i class="fa fa-clock-o"></i> Yesterday</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <div class="pull-left">
-                                            <img src="<?= $directoryAsset ?>/img/user4-128x128.jpg" class="img-circle"
-                                                 alt="user image"/>
-                                        </div>
-                                        <h4>
-                                            Reviewers
-                                            <small><i class="fa fa-clock-o"></i> 2 days</small>
-                                        </h4>
-                                        <p>Why not buy a new awesome theme?</p>
-                                    </a>
-                                </li>
                             </ul>
                         </li>
                         <li class="footer"><a href="#">查看全部信息</a></li>
@@ -106,37 +54,18 @@ use yii\helpers\Html;
                         <span class="label label-warning">10</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">你有10个通知</li>
+                        <li class="header">你有N个通知</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li>
                                     <a href="#">
-                                        <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                        <i class="fa fa-users text-aqua"></i> 预留功能区
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-warning text-yellow"></i> Very long description here that may
-                                        not fit into the page and may cause design problems
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-users text-red"></i> 5 new members joined
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-shopping-cart text-green"></i> 25 sales made
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fa fa-user text-red"></i> You changed your username
-                                    </a>
-                                </li>
+                                
+                                
+                              
                             </ul>
                         </li>
                         <li class="footer"><a href="#"></a></li>
@@ -149,14 +78,14 @@ use yii\helpers\Html;
                         <span class="label label-danger">9</span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">你有9个任务</li>
+                        <li class="header">你有N个任务</li>
                         <li>
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
                                 <li><!-- Task item -->
                                     <a href="#">
                                         <h3>
-                                            Design some buttons
+                                            进度条功能预留区
                                             <small class="pull-right">20%</small>
                                         </h3>
                                         <div class="progress xs">
@@ -169,58 +98,11 @@ use yii\helpers\Html;
                                     </a>
                                 </li>
                                 <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
-                                        <h3>
-                                            Create a nice theme
-                                            <small class="pull-right">40%</small>
-                                        </h3>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-green" style="width: 40%"
-                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                <span class="sr-only">40% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
-                                        <h3>
-                                            Some task I need to do
-                                            <small class="pull-right">60%</small>
-                                        </h3>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-red" style="width: 60%"
-                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                <span class="sr-only">60% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <!-- end task item -->
-                                <li><!-- Task item -->
-                                    <a href="#">
-                                        <h3>
-                                            Make beautiful transitions
-                                            <small class="pull-right">80%</small>
-                                        </h3>
-                                        <div class="progress xs">
-                                            <div class="progress-bar progress-bar-yellow" style="width: 80%"
-                                                 role="progressbar" aria-valuenow="20" aria-valuemin="0"
-                                                 aria-valuemax="100">
-                                                <span class="sr-only">80% Complete</span>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </li>
-                                <!-- end task item -->
+                                
                             </ul>
                         </li>
                         <li class="footer">
-                            <a href="#">View all tasks</a>
+                            <a href="#">查看所有任务</a>
                         </li>
                     </ul>
                 </li>
