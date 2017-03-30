@@ -30,32 +30,36 @@
 			[
 				'options' => ['class' => 'sidebar-menu'],
 				'items' => [
-					['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-					['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii']],
-					['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug']],
+					['label' => '主目录', 'options' => ['class' => 'header']],
+					
+                    
                     /*增加跳转去用户管理*/
 					['label' => '用户管理', 'icon' => 'fa fa-dashboard', 'url' => ['/user-backend']],
                     
-                    /*路由菜单管理*/
-					['label' => '路由菜单管理', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/menu']],
-                    
-                    /*路由列表*/
-					['label' => '路由列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/route']],
-					
-					/*增加路由权限管理*/
-					['label' => '增加路由权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/permission']],
-					
-					/*增加路由权限管理*/
-					['label' => '角色列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/role']],
-                    
-                    
-                    /*增加路由权限管理*/
-					['label' => '目前用户权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
-                    
-                    
-					['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+                    /*文件上传管理*/
+					['label' => '文件上传', 'icon' => 'fa fa-dashboard', 'url' => ['/upload/upload']],
+                    /*路由管理*/
+					/*触发下拉工具列表*/
 					[
-						'label' => 'Same tools',
+						'label' => '路由管理',
+						'icon' => 'fa fa-share',
+						'url' => '#',
+						'items' => [
+							['label' => '用户权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
+							['label' => '角色列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/role']],
+                            ['label' => '路由菜单', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/menu']],
+							['label' => '路由列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/route']],
+							['label' => '增加权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/permission']],
+						
+						],
+					],
+                    
+                   /*如果是没登录用户则显示需要其登录*/
+					['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+					
+					/*触发下拉工具列表*/
+                    [
+						'label' => '系统调试工具',
 						'icon' => 'fa fa-share',
 						'url' => '#',
 						'items' => [
@@ -80,7 +84,9 @@
 							],
 						],
 					],
-				],
+                    
+                    
+				],/*end of items*/
 			]
 		) ?>
 

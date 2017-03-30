@@ -27,6 +27,7 @@ return [
         ],
         
         'request' => [
+        	//'format'    =>  'json',
             'csrfParam' => '_csrf-api',
         ],
         'user' => [

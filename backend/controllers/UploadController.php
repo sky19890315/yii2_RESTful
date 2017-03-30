@@ -7,9 +7,9 @@
 	 */
 	namespace backend\controllers;
 	
+	use backend\models\Upload;
 	use Yii;
 	use yii\web\Controller;
-	use backend\models\Upload;
 	use yii\web\UploadedFile;
 	
 	class UploadController extends Controller
@@ -22,9 +22,14 @@
 			return $this->renderPartial('index');
 		}
 		
+		/**
+		 * @return string|\yii\web\Response
+		 * 文件上传控制器
+		 */
 		public function actionUpload ()
 		{
 			$model = new Upload();
+			
 			
 			//判断是否是post传输
 			if (Yii::$app->request->isPost) {
@@ -40,23 +45,18 @@
 				 * */
 				$model->file = UploadedFile::getInstance($model, 'file');
 				
+				
+				$path = 'uploads/' . date("Ymd", time()) . '/';
 				if ($model->file && $model->validate()) {
-					$model->file->saveAs('uploads/' . $model->file->baseName . '.'. $model->file->extension);
-				}
-				//路径
-				/*
-				$path = 'uploads/'.date("Ymd", time()). '/';
-				//如果是文件且类型符合要求 则通过
-				if ($model->file && $model->validate()){
-					if (!file_exists($path)) {
+					if (!is_dir($path)) {
 						mkdir($path, 0777);
 					}
 					
-					$model->file->saveAs($path . time() . '.' . $model->file->getExtension());
+					$model->file->saveAs($path . time() . '.' . $model->file->baseName . '.' . $model->file->extension);
+					
 					Yii::$app->session->setFlash('success', '文件上传成功！');
 					return $this->redirect('upload');
-					
-				}*/
+				}
 				
 			}
 			return $this->render('upload', ['model' => $model]);

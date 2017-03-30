@@ -22,6 +22,8 @@
 ?>
 <?= $form->field($model ,'file')->fileInput(); ?>
 <?=  Html::submitButton('提交', ['class'=>'btn btn-primary','name' =>'submit-button']) ?>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<?= Html::a('<span class="logo-lg">' . '返回首页'. '</span>', Yii::$app->homeUrl, ['class' => 'logo']) ?>
 
 <?php ActiveForm::end(); ?>
 
