@@ -1,18 +1,19 @@
 <?php
 
-namespace api\modules\v1\controllers;
+namespace api\modules\v2\controllers;
 
 use yii\rest\ActiveController;
 use yii\web\Response;
 
 /**
- * Class UsersController
- * @package api\modules\v1\controllers
+ * Class UserController
+ * @package api\modules\v2\controllers
  */
-class UsersController extends ActiveController
+class UserController extends ActiveController
 {
 	/**
 	 * @return array
+	 * 响应格式改为JSON格式
 	 */
 	public function behaviors ()
 	{
@@ -21,6 +22,7 @@ class UsersController extends ActiveController
 		return $behaviors;
 	}
 	
-	public $modelClass = 'api\models\User';
 	
+	//响应restful
+	public $modelClass = 'api\models\User';
 }

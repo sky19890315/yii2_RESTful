@@ -13,6 +13,11 @@ return [
         'v1' => [
             'class' => 'api\modules\v1\Module',
         ],
+	//增加v2版本模块
+        'v2' => [
+	        'class' => 'api\modules\v2\Module',
+        ],
+	    
     ],
     
     'id' => 'app-api',
@@ -22,13 +27,16 @@ return [
     'components' => [
         
         //修改响应格式
-        'response' => [
+       /* 'response' => [
             'format' => 'json'
-        ],
+        ],*/
         
         'request' => [
-        	//'format'    =>  'json',
             'csrfParam' => '_csrf-api',
+	        //修改 使API接受JSON格式输入的数据
+	        'parsers' => [
+	        	'application/json' => 'yii\web\JsonParser',
+	        ],
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -45,9 +53,7 @@ return [
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
-                [
-                    'class' => 'yii\log\FileTarget',
-                    'levels' => ['error', 'warning'],
+                ['class' => 'yii\log\FileTarget', 'levels' => ['error', 'warning'],
                 ],
             ],
         ],
@@ -55,27 +61,25 @@ return [
             'errorAction' => 'site/error',
         ],
        //启用路由控制
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'enableStrictParsing' =>true,
-            'rules' => [
-                
-                //解决严格解析后无法看到页面的问题 404 做一个映射 将nginx托管的页面放入严格解析页面
-	            '/' => 'site/index',
-                //解决启用'enableStrictParsing' =>true,抛出的404错误
-                //'<controller:\w+>/<action:\w+>/<page:\d+>' => '<controller>/<action>',
-               //'<controller:\w+>/<action:\w+>' => '<controller>/<action>' ,
-                //配置restful
-                [
-                'class' => 'yii\rest\UrlRule',
-	           //测试试验台
-               // 'controller' => ['v1/stations'],
-	           //测试goods
-	              // 'controller'     =>      ['v1/goods'],
-	              //  'controller'      =>        ['v1/cars'],
-                    'controller'        =>      ['v1/stations'],
-                ]
+        'urlManager' => ['enablePrettyUrl' => true, 'showScriptName' => false, 'enableStrictParsing' => true,
+             
+              'rules' => [
+	        //解决严格解析后无法看到页面的问题 404 做一个映射 将nginx托管的页面放入严格解析页面
+	        '/' => 'site/index', //解决启用'enableStrictParsing' =>true,抛出的404错误
+	        //'<controller:\w+>/<action:\w+>/<page:\d+>' => '<controller>/<action>',
+	        //'<controller:\w+>/<action:\w+>' => '<controller>/<action>' ,
+	        //配置restful
+	        ['class'      => 'yii\rest\UrlRule', //测试试验台
+		        // 'controller' => ['v1/stations'],
+		        //测试goods
+		        // 'controller'     =>      ['v1/goods'],
+		        //  'controller'      =>        ['v1/cars'],
+		     'controller' => ['v1/stations', 'v1/users', 'v1/upload'],
+	        ],
+	            
+	            //20170329增加v2版本
+	            ['class' => 'yii\rest\UrlRule', 'controller' => ['v2/user', 'v2/post']],
+	            
             ],
         ],
         

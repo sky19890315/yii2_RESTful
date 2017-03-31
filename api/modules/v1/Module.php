@@ -20,5 +20,15 @@ class Module extends \yii\base\Module
         parent::init();
 
         // custom initialization code goes here
+	    //增加文件上传模块
+	    return [
+		
+		    'modules' => [
+			    'upload' => [
+				    'class' => 'api\modules\v1\upload\Module',
+			    ],
+		    ],
+	    	
+	    ];
     }
 }
