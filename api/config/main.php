@@ -27,9 +27,11 @@ return [
     'components' => [
         
         //修改响应格式
-       /* 'response' => [
-            'format' => 'json'
-        ],*/
+	    //恢复响应格式 20170406
+       'response' => [
+            'format' => yii\web\Response::FORMAT_JSON,
+	       'charset' => 'UTF-8',
+        ],
         
         'request' => [
             'csrfParam' => '_csrf-api',
@@ -64,14 +66,28 @@ return [
         'urlManager' => ['enablePrettyUrl' => true, 'showScriptName' => false, 'enableStrictParsing' => true,
              
               'rules' => [
+              	
+              	/*解决访问v1时空白显示*/
+              	'/v1'   =>  'site/index',
+              	
 	        //解决严格解析后无法看到页面的问题 404 做一个映射 将nginx托管的页面放入严格解析页面
 	        '/' => 'site/index', //解决启用'enableStrictParsing' =>true,抛出的404错误
 	        '/v1/file'  =>  'file/index'  ,
-	        /*      上传页面 优化替换成file
-	        '/v1/upload'    =>  'upload/index',     */
-	        //'<controller:\w+>/<action:\w+>/<page:\d+>' => '<controller>/<action>',
-	        //'<controller:\w+>/<action:\w+>' => '<controller>/<action>' ,
-	        //配置restful
+	         
+	              /**
+	               *  上传页面 优化替换成file 在文件管理页面
+	               *  隐藏实际路由
+	               */
+	        '/v1/file/upload'    =>  'upload/index',
+	              
+	              //下载文件页面
+	        'v1/file/download'   =>   'download/index',
+	        
+	              //'<controller:\w+>/<action:\w+>/<page:\d+>' => '<controller>/<action>',
+	        
+	              //'<controller:\w+>/<action:\w+>' => '<controller>/<action>' ,
+	        
+	              //配置restful
 	        ['class'      => 'yii\rest\UrlRule', //测试试验台
 		        // 'controller' => ['v1/stations'],
 		        //测试goods

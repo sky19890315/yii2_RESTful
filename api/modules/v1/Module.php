@@ -28,6 +28,8 @@ class Module extends \yii\base\Module
 				    'class' => 'api\modules\v1\upload\Module',
 			    ],
 		    ],
+		
+		   
 	    	
 	    ];
     }

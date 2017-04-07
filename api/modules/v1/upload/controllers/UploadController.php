@@ -33,20 +33,34 @@ class UploadController extends ActiveController
 			    mkdir($path, 0777);
 		    }
 		    //如果上传成功 跳转到api首页
-		    $model->file->saveAs($path . time() . '.' . $model->file->baseName . '.' . $model->file->extension);
-		
+		    $filePath = $path . time() . '.' . $model->file->baseName . '.' . $model->file->extension;
+		    $model->file->saveAs($filePath);
+			
 		    /**
 		     * 上传成功 返回成功码
 		     */
-		    $arr = array('code' => '200', 'message' => '数据上传成功！',);
-		    return json_encode($arr);
+		    return \Yii::createObject([
+		    	'class'     =>  'yii\web\Response',
+			    'format'    =>  \yii\web\Response::FORMAT_JSON,
+			    'data'      =>  [
+			    	'message'   =>  '文件上传成功！',
+				    'code'      =>  '200',
+			    ],
+		    ]);
+		    
 		
 	    }
 	
 	    /**
 	     * 否则上传失败 返回失败码
 	     */
-	    $arr = array('code' => '400', 'message' => '数据上传失败！',);
-	    return json_encode($arr);
+	    return \Yii::createObject([
+		    'class'     =>  'yii\web\Response',
+		    'format'    =>  \yii\web\Response::FORMAT_JSON,
+		    'data'      =>  [
+			    'message'   =>  '文件上传失败！',
+			    'code'      =>  '400',
+		    ],
+	    ]);
     }
 }

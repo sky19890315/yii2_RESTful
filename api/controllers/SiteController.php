@@ -24,17 +24,21 @@ class SiteController extends Controller
         ];
     }
 	
-
+	
     /**
      * Displays homepage.
-     *
+     *  设置首页响应格式，避免出现混乱
      * @return mixed
      */
     public function actionIndex()
     {
-        
+        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
         return $this->renderPartial('index');
+        
     }
-
-  
+	
+    
+   
+	
+	
 }
