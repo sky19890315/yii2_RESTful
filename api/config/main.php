@@ -59,6 +59,9 @@ return [
 	     * 20170411 增加登录验证授权 omg sky 296675685@qq.com
 	     * 任性
 	     * 认证类 选择 common\models\User
+	     * 配置用户的相关信息  关闭session
+	     * 设置 loginUrl 属性为null 显示一个HTTP 403 错误而不是跳转到登录界面.
+	     * 在你的user identity class 类中实现 yii\web\IdentityInterface::findIdentityByAccessToken() 方法.
 	     */
 	    'user' => [
 		    'identityClass' => 'common\models\User',
