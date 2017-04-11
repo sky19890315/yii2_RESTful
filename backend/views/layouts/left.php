@@ -30,26 +30,37 @@
 			[
 				'options' => ['class' => 'sidebar-menu'],
 				'items' => [
-					['label' => '主目录', 'options' => ['class' => 'header']],
 					
-                    
+					/**
+					 * 首页
+					 */
+					['label' => 'HOME', 'icon' => 'fa fa-home', 'url' => ['/']],
+					
+					/**
+					 * RBAC权限管理系统
+					 */
+					['label' => '权限系统', 'icon' => 'fa fa-unlock-alt', 'url' => ['/rbac/index']],
+					
                     /*增加跳转去用户管理*/
-					['label' => '用户管理', 'icon' => 'fa fa-dashboard', 'url' => ['/user-backend']],
+					['label' => '用户管理', 'icon' => 'fa fa-users', 'url' => ['/user-backend']],
                     
                     /*文件上传管理*/
-					['label' => '文件上传', 'icon' => 'fa fa-dashboard', 'url' => ['/upload/upload']],
-                    /*路由管理*/
-					/*触发下拉工具列表*/
+					['label' => '文件上传', 'icon' => 'fa fa-cloud-upload', 'url' => ['/upload/upload']],
+					
+                    /**
+					 * 路由管理
+                     * 触发下拉工具列表
+					 */
 					[
 						'label' => '路由管理',
-						'icon' => 'fa fa-share',
+						'icon' => 'fa fa-internet-explorer',
 						'url' => '#',
 						'items' => [
-							['label' => '用户权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin']],
-							['label' => '角色列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/role']],
-                            ['label' => '路由菜单', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/menu']],
-							['label' => '路由列表', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/route']],
-							['label' => '增加权限', 'icon' => 'fa fa-dashboard', 'url' => ['/admin/permission']],
+							['label' => '用户权限', 'icon' => 'fa fa-user', 'url' => ['/admin']],
+							['label' => '角色列表', 'icon' => 'fa fa-user-secret', 'url' => ['/admin/role']],
+                            ['label' => '路由菜单', 'icon' => 'fa fa-exchange', 'url' => ['/admin/menu']],
+							['label' => '路由列表', 'icon' => 'fa fa-list-ul', 'url' => ['/admin/route']],
+							['label' => '增加权限', 'icon' => 'fa fa-plus-square', 'url' => ['/admin/permission']],
 						
 						],
 					],
@@ -60,14 +71,14 @@
 					/*触发下拉工具列表*/
                     [
 						'label' => '系统调试工具',
-						'icon' => 'fa fa-share',
+						'icon' => 'fa fa-bug',
 						'url' => '#',
 						'items' => [
 							['label' => 'Gii', 'icon' => 'fa fa-file-code-o', 'url' => ['/gii'],],
-							['label' => 'Debug', 'icon' => 'fa fa-dashboard', 'url' => ['/debug'],],
+							['label' => 'Debug', 'icon' => 'fa fa-bug', 'url' => ['/debug'],],
 							[
 								'label' => 'Level One',
-								'icon' => 'fa fa-circle-o',
+								'icon' => 'fa fa-warning (alias)',
 								'url' => '#',
 								'items' => [
 									['label' => 'Level Two', 'icon' => 'fa fa-circle-o', 'url' => '#',],

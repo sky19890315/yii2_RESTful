@@ -3,8 +3,15 @@
 namespace api\controllers;
 use Yii;
 
+/**
+ * Class DownloadController
+ * @package api\controllers
+ */
 class DownloadController extends \yii\web\Controller
 {
+	/**
+	 * @return object
+	 */
     public function actionIndex()
     {
 	    /**
@@ -34,17 +41,26 @@ class DownloadController extends \yii\web\Controller
 	     * @return mixed
 	     * 目录下以时间戳为单位
 	     */
-	   if (Yii::$app->request->isGet) {
-	   	
-	   }
-	    
-	    
+	   $body = Yii::$app->db->createCommand('SELECT * FROM filePath')->queryAll();
+	    return \Yii::createObject([
+		    'class'     =>      'yii\web\Response',
+		    'format'    =>      \yii\web\Response::FORMAT_JSON,
+		    'data'      =>      [
+			    'code'      =>  '200',
+			    'content'   =>  $body,
+		    ],
 	
-
-	    
-	    
-	    
-	    
+	    ]);
+    }
+	
+	/**
+	 * 根据提供的URL进行下载
+	 */
+    public function actionDownload()
+    {
+    	if (Yii::$app->request->isGet) {
+    		
+	    }
     }
 
 }

@@ -57,7 +57,9 @@
     <br/>
     <br/>
     <a href="http://api.com/v1/file/download">DownLoad</a>
-    <p>处理文件上传的控制器：UploadController下的index方法</p>
-    <p>请求路由：http://api.prmeasure.com/v1/file/upload</p>
+    <p>文件上传，只接受post方式，与版本无关，请求URL = http://api.prmeasure.com/upload/index </p>
+    <p>即请求upload控制器的index动作，返回状态码</p>
+    <p>服务区文件文件信息，与版本无关，请求URL = http://api.prmeasure.com/Download/index </p>
+    <p>即请求download控制器的index动作，返回状态码</p>
 </body>
 </html>

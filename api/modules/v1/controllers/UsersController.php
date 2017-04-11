@@ -11,6 +11,6 @@ use yii\web\Response;
  */
 class UsersController extends BaseController
 {
-	public $modelClass = 'api\models\User';
+	public $modelClass = 'api\models\Users';
 	
 }

@@ -88,7 +88,7 @@
     <!-- Content Wrapper. Contains page content -->
 
         <!-- Main content -->
-        <section class="content">
+        <section class="content" style="background-color: #f0f9ff">
  
             <!-- Main row -->
             <div class="row">
@@ -100,21 +100,14 @@
                     <!-- Chat box -->
                     <div class="box box-success">
                         <div class="box-header">
-                            <i class="fa fa-comments-o"></i>
+                            <i class="fa fa-television"></i>
 
                             <h3 class="box-title">系统信息</h3>
-
-                            <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
-                                <div class="btn-group" data-toggle="btn-toggle">
-                                    <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i>
-                                    </button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
-                                </div>
-                            </div>
+                            
                         </div>
                         <div class="box-body chat" id="chat-box">
                             <!-- chat item -->
-                            <h4>当前登录用户：</h4>
+                            <h4>登录用户：</h4>
                             <h4> <?php  echo Get_Current_User(); ?></h4>
                             <h4>系统概况：</h4>
                            <h4><?php echo php_uname(); ?></h4>
@@ -271,13 +264,7 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-        <div class="pull-right hidden-xs">
-            <b>Version</b> 2.3.8
-        </div>
-        <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-        reserved.
-    </footer>
+  
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">

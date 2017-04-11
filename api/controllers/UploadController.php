@@ -38,9 +38,18 @@ class UploadController extends Controller
 			    if (!is_dir($path)) {
 				    mkdir($path, 0777);
 			    }
+			$filename = time() . '.' . $model->file->baseName . '.' . $model->file->extension;
+			$filePath = $path . $filename;
+			$model->file->saveAs($filePath);
+			    /**
+			     * 接收到数据的同时 写入数据库
+			     */
+			 Yii::$app->db->createCommand()->insert('filePath', [
+				'fileName'  =>  $filename,
+				'filePath'  =>  $filePath
+			])->execute();
 			
-			 $model->file->saveAs($path . time() . '.' . $model->file->baseName . '.' . $model->file->extension);
-				
+			
 			    /**
 			     * 文件上传 成功返回200 失败返回400
 			     */
