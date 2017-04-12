@@ -51,29 +51,28 @@ class User extends ActiveRecord implements IdentityInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 	
-
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @return string
+	 */
     public static function tableName()
     {
         return '{{%user}}';
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @return array
+	 */
     public function behaviors()
     {
         return [
             TimestampBehavior::className(),
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @return array
+	 */
     public function rules()
     {
         return [
@@ -81,21 +80,25 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @param int|string $id
+	 * @return static
+	 */
     public static function findIdentity($id)
     {
         return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * 20170412 sky 296675685@qq.com 启用授权认证系统
+	 * @param mixed $token
+	 * @param null  $type
+	 * @return static
+	 */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+    	return static::findOne(['access_token' => $token]);
     }
 
     /**
@@ -143,26 +146,27 @@ class User extends ActiveRecord implements IdentityInterface
         $expire = Yii::$app->params['user.passwordResetTokenExpire'];
         return $timestamp + $expire >= time();
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @return mixed
+	 */
     public function getId()
     {
         return $this->getPrimaryKey();
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @return string
+	 */
     public function getAuthKey()
     {
         return $this->auth_key;
     }
-
-    /**
-     * @inheritdoc
-     */
+	
+	/**
+	 * @param string $authKey
+	 * @return bool
+	 */
     public function validateAuthKey($authKey)
     {
         return $this->getAuthKey() === $authKey;
@@ -215,11 +219,12 @@ class User extends ActiveRecord implements IdentityInterface
 	
 	/**
 	 * 生成密钥
+	 * @return string
 	 */
     public function generateApiToken()
     {
     	//拼接生成的api
-    	$this->api_token = Yii::$app->security->generateRandomString().'_'.time();
+	    $this->api_token = Yii::$app->security->generateRandomString().'_'.time();
     }
 	
 	/**
