@@ -16,7 +16,7 @@
 </head>
 <body>
 
-    <h1 ><?= Html::encode($this->title) ?></h1>
+    <h1 style="background-color: #ffffcc; width: 1240px"><?= Html::encode($this->title) ?></h1>
 
     <p >Version:v1 time:<?php echo date("北京时间Y年m月d日H:i:s");?></p>
     
@@ -30,6 +30,7 @@
     <p ><b>请求：<u>UPDATE</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>更新：</b>users中id为{id}的资源</p>
     <p ><b>请求：<u>DELETE</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>删除：</b>users中id为{id}的资源</p>
     <h3>响应码一览表</h3>
+    <div style="background-color: #f0f0f1; width: 1240px; border: 1px solid">
     <pre>
     100 => 'Continue',              101 => 'Switching Protocols',           102 => 'Processing',                118 => 'Connection timed out',
     200 => 'OK',                    201 => 'Created',                       202 => 'Accepted',                  203 => 'Non-Authoritative',
@@ -50,6 +51,7 @@
     504 => 'Gateway Time-out',      505 => 'HTTP Version not supported',    507 => 'Insufficient storage',
     508 => 'Loop Detected',         509 => 'Bandwidth Limit Exceeded',      510 => 'Not Extended',              511 => 'Network Authentication Required',
     </pre>
+    </div>
     <h3>文件上传下载</h3>
     <a href="http://api.com/v1/file/upload">UpLoad</a>
     <br/>
@@ -57,9 +59,28 @@
     <br/>
     <br/>
     <a href="http://api.com/v1/file/download">DownLoad</a>
-    <p>文件上传，只接受post方式，与版本无关，请求URL = http://api.prmeasure.com/upload/index </p>
+    <p>文件上传，只接受post方式，与版本无关，请求URL = http://api.prmeasure.com/v1/file/upload </p>
     <p>即请求upload控制器的index动作，返回状态码</p>
-    <p>服务区文件文件信息，与版本无关，请求URL = http://api.prmeasure.com/Download/index </p>
+    <p>服务区文件文件信息，与版本无关，请求URL = http://api.prmeasure.com/v1/file/download </p>
     <p>即请求download控制器的index动作，返回状态码</p>
+    <br/>
+    <h3>错误码速查表</h3>
+    <div style="background-color: #f0f0f1; width: 800px; border: 1px solid">
+        <pre>
+        200: OK。一切正常。
+        201: 响应 POST 请求时成功创建一个资源。Location header 包含的URL指向新创建的资源。
+        204: 该请求被成功处理，响应不包含正文内容 (类似 DELETE 请求)。
+        304: 资源没有被修改。可以使用缓存的版本。
+        400: 错误的请求。可能通过用户方面的多种原因引起的，例如在请求体内有无效的JSON 数据，无效的操作参数，等等。
+        401: 验证失败。
+        403: 已经经过身份验证的用户不允许访问指定的 API 末端。
+        404: 所请求的资源不存在。
+        405: 不被允许的方法。 请检查 Allow header 允许的HTTP方法。
+        415: 不支持的媒体类型。 所请求的内容类型或版本号是无效的。
+        422: 数据验证失败 (例如，响应一个 POST 请求)。 请检查响应体内详细的错误消息。
+        429: 请求过多。 由于限速请求被拒绝。
+        500: 内部服务器错误。 这可能是由于内部程序错误引起的。
+        </pre>
+    </div>
 </body>
 </html>

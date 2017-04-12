@@ -1,12 +1,6 @@
 <?php
 namespace common\models;
 
-use Yii;
-use yii\base\NotSupportedException;
-use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
-use yii\web\IdentityInterface;
-
 /**
  *                    _ooOoo_
  *                   o8888888o
@@ -31,6 +25,11 @@ use yii\web\IdentityInterface;
  *          佛祖保佑             永无BUG
  */
 
+use Yii;
+use yii\base\NotSupportedException;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
+use yii\web\IdentityInterface;
 
 /**
  * User model
@@ -45,6 +44,10 @@ use yii\web\IdentityInterface;
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
+ *
+ * 已经通过实现认证接口 来完成认证任务
+ * 我创建了一个用户类User 继承了 ActiveRecord 类 实现了 IdentityInterface 接口
+ * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
 class User extends ActiveRecord implements IdentityInterface
 {
@@ -54,6 +57,8 @@ class User extends ActiveRecord implements IdentityInterface
 	
 	/**
 	 * @return string
+	 * 制定要查询的表  通过yii2 的特殊认证方法 取得user表名
+	 *
 	 */
     public static function tableName()
     {
@@ -82,8 +87,11 @@ class User extends ActiveRecord implements IdentityInterface
     }
 	
 	/**
-	 * @param int|string $id
-	 * @return static
+	 * 根据给到的ID查询身份。
+	 *
+	 * @param int|string $id 被查询的ID
+	 * @return static 通过ID匹配到的身份对象
+	 * 根据指定的用户ID查找 认证模型类的实例，当你需要使用session来维持登录状态的时候会用到这个方法。
 	 */
     public static function findIdentity($id)
     {
@@ -92,9 +100,16 @@ class User extends ActiveRecord implements IdentityInterface
 	
 	/**
 	 * 20170412 sky 296675685@qq.com 启用授权认证系统
-	 * @param mixed $token
+	 * @param mixed $token 被查询的 token
 	 * @param null  $type
-	 * @return static
+	 * @return static 通过 token 得到的身份对象
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * 实现restful api 验证必须要实现的方法
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 *
+	 * 根据 token 查询身份。
+	 *
+	 *
 	 */
     public static function findIdentityByAccessToken($token, $type = null)
     {
@@ -148,15 +163,21 @@ class User extends ActiveRecord implements IdentityInterface
     }
 	
 	/**
-	 * @return mixed
+	 * @return int|string 当前用户ID  修改实现的方法 20170412
+	 *
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * 实现restful api 验证必须要实现的方法
+	 * ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 */
     public function getId()
     {
-        return $this->getPrimaryKey();
+        return $this->id;
     }
 	
 	/**
 	 * @return string
+	 *
+	 * 获取基于 cookie 登录时使用的认证密钥。 认证密钥储存在 cookie 里并且将来会与服务端的版本进行比较以确保 cookie的有效性。
 	 */
     public function getAuthKey()
     {
@@ -166,6 +187,8 @@ class User extends ActiveRecord implements IdentityInterface
 	/**
 	 * @param string $authKey
 	 * @return bool
+	 *
+	 * 是基于 cookie 登录密钥的 验证的逻辑的实现
 	 */
     public function validateAuthKey($authKey)
     {

@@ -36,6 +36,23 @@ return [
 	    
 	    
     ],
+	
+	
+	/**
+	 *  2017-04-12 最新修改
+	 * 因为 之前把这个配置文件放入组件中 直接导致出错 现在给予修改
+	 * 修复未登录用户也能访问的bug
+	 */
+    'as access'         =>  [
+	    'class'         =>  'mdm\admin\components\AccessControl',
+	    'allowActions'  =>  [
+		    //存放允许访问的action
+		    //controller/action
+		    '*',
+	    ],
+    ],
+
+
     'components' => [
         //增加
         'assetManager' => [
@@ -52,17 +69,7 @@ return [
 	    	'class'         =>  'yii\rbac\DbManager',
 		    'defaultRoles'  =>  ['guest'],
 	    ],
-	    //增加认证管理↑
-	    
-	    'as access'         =>  [
-	    	'class'         =>  'mdm\admin\components\AccessControl',
-		    'allowActions'  =>  [
-		        //存放允许访问的action
-			    //controller/action
-			    '*',
-		    ],
-	    ],
-	    
+
 	    
         'request' => [
             'csrfParam' => '_csrf-backend',
