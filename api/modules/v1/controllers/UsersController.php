@@ -3,7 +3,6 @@
 namespace api\modules\v1\controllers;
 
 use api\modules\v1\controllers\BaseController;
-use yii\web\Response;
 
 /**
  * Class UsersController

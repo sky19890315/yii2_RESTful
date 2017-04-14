@@ -47,6 +47,11 @@ use yii\web\IdentityInterface;
  *
  * 已经通过实现认证接口 来完成认证任务
  * 我创建了一个用户类User 继承了 ActiveRecord 类 实现了 IdentityInterface 接口
+ *
+ * 2017-04-13
+ * API 的设计原则 只完成接口要做的事情 其它事情不去做
+ * 所以以上的验证应该放入后台管理  在后台管理分配角色等
+ * 这边只做验证使用
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
 class User extends ActiveRecord implements IdentityInterface

@@ -42,6 +42,7 @@ return [
 	 *  2017-04-12 最新修改
 	 * 因为 之前把这个配置文件放入组件中 直接导致出错 现在给予修改
 	 * 修复未登录用户也能访问的bug
+	 * 只要不修改  以下的* 则权限管理系统不生效
 	 */
     'as access'         =>  [
 	    'class'         =>  'mdm\admin\components\AccessControl',
@@ -51,8 +52,7 @@ return [
 		    '*',
 	    ],
     ],
-
-
+	
     'components' => [
         //增加
         'assetManager' => [

@@ -54,41 +54,7 @@ class SiteController extends Controller
 		    ];
 	    
 	    //修复无法登录的问题↑
-    	
-    	
-    	
-    	
-    	//后期增加路由控制需要的部分 可以先注释掉
-	    /*
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-	                    // 当前rule将会针对这里设置的actions起作用，如果actions不设置，默认就是当前控制器的所有操作
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'signup'],
-	                    // 设置actions的操作是允许访问还是拒绝访问
-                        'allow' => true,
-	                    // @ 当前规则针对认证过的用户; ? 所有方可均可访问
-	                    'roles' => ['@'],
-                    ],
-						//修改认证方式 20170322
-                    [
-                        'actions' => ['index'],
-                        'allow' => true,
-	                    //允许操作的action 动词 POST
-                        'verbs' => ['POST'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
-                ],
-            ],
-        ];
-        */
+	    
     }
 
     /**

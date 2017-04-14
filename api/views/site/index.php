@@ -13,24 +13,52 @@
 <head>
     <meta charset="UTF-8">
     <title>PRMEASURE-API</title>
+    <style>
+        .nav {
+          background-color: #ffffcc;
+          width: 1240px;
+        }
+        .box {
+            background-color: #f0f0f1;
+            width: 1240px;
+            border: 1px solid;
+        }
+        
+        .test {
+            background-color: #00a7d0;
+        }
+    </style>
+    
 </head>
 <body>
 
-    <h1 style="background-color: #ffffcc; width: 1240px"><?= Html::encode($this->title) ?></h1>
+    <h1 class="nav"><?= Html::encode($this->title) ?></h1>
 
     <p >Version:v1 time:<?php echo date("北京时间Y年m月d日H:i:s");?></p>
     
     <h3 >请求示例</h3>
-    <p ><b>请求：</b>api.com\v1\stations &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations资源</p>
-    <p ><b>请求：</b>api.com\v1\stations\1 &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations中id为1的资源</p>
-    <p ><b>请求：</b>api.com\v1\users &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>users资源</p>
-    <p ><b>请求：</b>api.com\v1\users\1 &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>users中id为1的资源</p>
-    <p ><b>请求：<u>GET</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>获取：</b>users中id为{id}的资源</p>
-    <p ><b>请求：<u>POST</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>创建：</b>users中id为{id}的资源</p>
-    <p ><b>请求：<u>UPDATE</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>更新：</b>users中id为{id}的资源</p>
-    <p ><b>请求：<u>DELETE</u></b>&nbsp;&nbsp;api.com\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>删除：</b>users中id为{id}的资源</p>
+    <p ><b>请求：</b>api.prmeasure\v1\stations &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations资源</p>
+    <p ><b>请求：</b>api.prmeasure\v1\stations\1 &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations中id为1的资源</p>
+    <p ><b>请求：</b>api.prmeasure\v1\users &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>users资源</p>
+    <p ><b>请求：</b>api.prmeasure\v1\users\1 &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>users中id为1的资源</p>
+    <p ><b>请求：<u>GET</u></b>&nbsp;&nbsp;api.prmeasure\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>获取：</b>users中id为{id}的资源</p>
+    <p ><b>请求：<u>POST</u></b>&nbsp;&nbsp;api.prmeasure\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>创建：</b>users中id为{id}的资源</p>
+    <p ><b>请求：<u>UPDATE</u></b>&nbsp;&nbsp;api.prmeasure\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>更新：</b>users中id为{id}的资源</p>
+    <p ><b>请求：<u>DELETE</u></b>&nbsp;&nbsp;api.prmeasure\v1\users\{id} &nbsp;&nbsp;&nbsp;&nbsp;<b>删除：</b>users中id为{id}的资源</p>
+    <h3>服务器资源列表</h3>
+    <div class="box">
+        <pre>
+        上传提交网址       http://api.prmeasure.com/upload/index          //暂时与版本无关
+        模拟上传网址       http://api.prmeasure.com/v1/file/upload
+        下载请求网址       http://api.prmeasure.com/download/index        //暂时与版本无关
+        试验台信息集       http://api.prmeasure.com/v1/stations
+        普通用户信息       http://api.prmeasure.com/v1/users
+        管理员信息集       http://api.prmeasure.com/v1/admins
+        模拟订单信息       http://api.prmeasure.com/v1/testorders
+        </pre>
+    </div>
     <h3>响应码一览表</h3>
-    <div style="background-color: #f0f0f1; width: 1240px; border: 1px solid">
+    <div class="box">
     <pre>
     100 => 'Continue',              101 => 'Switching Protocols',           102 => 'Processing',                118 => 'Connection timed out',
     200 => 'OK',                    201 => 'Created',                       202 => 'Accepted',                  203 => 'Non-Authoritative',
@@ -52,20 +80,8 @@
     508 => 'Loop Detected',         509 => 'Bandwidth Limit Exceeded',      510 => 'Not Extended',              511 => 'Network Authentication Required',
     </pre>
     </div>
-    <h3>文件上传下载</h3>
-    <a href="http://api.com/v1/file/upload">UpLoad</a>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <a href="http://api.com/v1/file/download">DownLoad</a>
-    <p>文件上传，只接受post方式，与版本无关，请求URL = http://api.prmeasure.com/v1/file/upload </p>
-    <p>即请求upload控制器的index动作，返回状态码</p>
-    <p>服务区文件文件信息，与版本无关，请求URL = http://api.prmeasure.com/v1/file/download </p>
-    <p>即请求download控制器的index动作，返回状态码</p>
-    <br/>
     <h3>错误码速查表</h3>
-    <div style="background-color: #f0f0f1; width: 800px; border: 1px solid">
+    <div class="box">
         <pre>
         200: OK。一切正常。
         201: 响应 POST 请求时成功创建一个资源。Location header 包含的URL指向新创建的资源。
@@ -82,5 +98,6 @@
         500: 内部服务器错误。 这可能是由于内部程序错误引起的。
         </pre>
     </div>
+
 </body>
 </html>
