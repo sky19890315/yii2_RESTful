@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/test.gif" class="img-circle" alt="User Image"/>
+                <img src="<?= $directoryAsset ?>/img/admin.jpeg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>超级管理员</p>

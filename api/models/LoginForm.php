@@ -98,6 +98,10 @@ class LoginForm extends Model
 		}
 	}
 	
+	/**
+	 * 登录校验成功后，为用户生成新的token
+	 * 如果token失效，则重新生成token
+	 */
 	public function onGenerateApiToken()
 	{
 		if (!User::apiTokenIsValid($this->_user->api_token)) {

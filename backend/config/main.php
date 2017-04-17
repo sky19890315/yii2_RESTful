@@ -8,10 +8,6 @@ $params = array_merge(
 
 return [
 	
-	//尝试修改默认路由
-	//'defaultRoute'  =>  'index/index',
-	//以上为选择默认控制器IndexController下的index方法
-	
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
@@ -27,7 +23,10 @@ return [
 	        'class' =>  'mdm\admin\Module',
 	    ],
 	    
-	    //设置别名
+	    /**
+	     * 设置别名
+	     * 别名的好处是不涉及绝对路径 对数据迁移很有好处
+	     */
 	    'aliases'   =>  [
 	        '@mdm/admin'    =>  '@vendor/mdmsoft/yii2-admin',
 	    ],
@@ -47,8 +46,13 @@ return [
     'as access'         =>  [
 	    'class'         =>  'mdm\admin\components\AccessControl',
 	    'allowActions'  =>  [
-		    //存放允许访问的action
-		    //controller/action
+		
+		    /**
+		     * 存放允许访问的action
+		     * 格式为 controller/action
+		     * 现在 * 表示放行所有控制器的动作
+		     */
+		    
 		    '*',
 	    ],
     ],
@@ -64,7 +68,11 @@ return [
         ],
         //以上为增加
 	    
-	    //增加认证管理↓
+	    /**
+	     * 增加认证管理↓
+	     * 这条认证原理是所有用户登录后默认角色为 guest 即游客
+	     * 2017-04-16 将这套用于API管理
+	     */
 	    'authManager'       =>  [
 	    	'class'         =>  'yii\rbac\DbManager',
 		    'defaultRoles'  =>  ['guest'],
@@ -75,15 +83,25 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         
-        //修改用户验证机制
+	    /**
+	     * 启用独立的后台验证机制
+	     */
         'user' => [
-            //修改默认类
-            'identityClass'     =>      'backend\models\UserBackend',
+        	
+	        /**
+	         * 默认类修改为后台管理验证机制
+	         * 避免与前台发生冲突
+	         */
+            'identityClass'     =>      'backend\models\AdminUser',
             'enableAutoLogin'   =>      true,
            // 'identityCookie'    =>      ['name' => '_identity-backend', 'httpOnly' => true],
         ],
         'session' => [
-            // this is the name of the session cookie used for login on the backend
+	        
+        	/**
+	         * this is the name of the session cookie used for login on the backend
+	         * 区分出前后台的session是为了解决后台登录后 前台也登录的问题
+	         */
             'name' => 'advanced-backend',
         ],
         'log' => [
@@ -102,6 +120,12 @@ return [
 	    
 	    //20170324修改路由管理功能
         'urlManager'                => [
+	
+	        /**
+	         * 增加URL格式  2017-04-17
+	         */
+	       // 'urlFormat'=>'path',
+	        
         	//是否启用路由美化
             'enablePrettyUrl'                   => true,
 	        //是否忽略index.php
@@ -109,7 +133,11 @@ return [
 	        //是否启用严格脚本解析
 	        'enableStrictParsing'               => false,
             'rules' => [
+            	'/' => 'site/index',
 	        '<controller:\w+>/<action:\w+>'     =>  '<controller>/<action>',
+	       
+	            
+	            
 	        //'suffix' => '.html',
             ],
         ],

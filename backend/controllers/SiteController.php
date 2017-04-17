@@ -6,6 +6,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
 use common\models\LoginForm;
+use backend\models\SignupForm;
 
 /**
  * Site controller
@@ -21,23 +22,23 @@ class SiteController extends Controller
 	    return [
 	    	'access'        =>  [
 	    	    'class'     =>  AccessControl::className(),
-			    //验证规则1 做登录验证
-			    //当前规则将会针对这里设置的actions起作用，如果actions不设置
-			    //默认就是当前控制器的所有动作
+			    'only'  =>  ['login', 'logout', 'signup','index'],
 			    'rules'     =>  [
 			    	[
-			    //actions和allow就是 AccessRule的属性
-				//20170324增加验证规则 index view create update delete signup  ---sky
-			    //'actions' =>  ['login', 'error'],  20170324 --sky 替代如下
-				/*注意 -- 修改规则后导致无法登录。即无法访问登录页面 故增加login和 error路由*/
-				'actions'   =>  ['index', 'view', 'create', 'update', 'create', 'signup', 'login', 'error'],
-				//符合以上规则允许访问
 			    'allow'     =>  true,
-				//设置角色 @ --表示当前规则针对认证过的用户	 ？ --表示所有用户均可访问
+					    /**
+					     * 规格对以下列出的动作有效
+					     * 设置角色 @ --表示当前规则针对认证过的用户
+					     * ？ --表示所有用户均可访问
+					     */
+				'actions'   =>  ['login', 'signup'],
+				'roles' =>  ['?'],
 		            ],
-			    //验证规则2 做退出登录
+				    /**
+				     * 只有已经登录的用户才能退出
+				     */
 				    [
-				'actions'   =>  ['logout', 'index'],
+				'actions'   =>  ['logout','index'],
 				'allow'     =>  true,
 				//角色
 				'roles'     =>  ['@'],
@@ -51,9 +52,28 @@ class SiteController extends Controller
 			    'logout'    =>  ['post'],
 			    ],
 		    ],
-		    ];
+		    
 	    
 	    //修复无法登录的问题↑
+	    
+	    /**
+	     * 日期 2017-04-14 增加首页缓存机制 在一定时间内访问后台首页 将调用本地缓存文件
+	     *  @param Action $action 当前处理的动作对象
+	     *  @param array $params “params” 属性的值
+	     *  @return int 页面修改时的 Unix 时间戳
+	     * 上述代码表明 HTTP 缓存只在 index 动作时启用。
+	     */
+	    /*
+	    [
+	    	'class'         =>  'yii\filters\HttpCache',
+		    'only'          =>  'index',
+		    'lastModified'  =>  function ($action, $params) {
+	    	    $q = new \yii\db\Query();
+	    	    return $q->from('post')->max('update_at');
+		    }
+	    ],
+	*/
+	    ]; //end of return
 	    
     }
 
@@ -101,8 +121,14 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
-        	
-        	//已经登录用户直接调用登录表单
+	
+	        /**
+	         * 未登录用户调用登录表单
+	         * Do not use this code in your template. Remove it.
+	         * Instead, use the code  $this->layout = '//main-login'; in your controller.
+	         */
+	        
+	        $this->layout = 'main-login';
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -120,4 +146,31 @@ class SiteController extends Controller
 
         return $this->goHome();
     }
+	
+	/**
+	 * @return string
+	 */
+    public function actionSignup()
+    {
+    	$model = new SignupForm();
+	    /**
+	     * 如果是已经登录的用户直接去首页
+	     * 否则清登录页面
+	     */
+	    /*
+    	if ($model->load(Yii::$app->request->post())) {
+    		if ($user = $model->signup()) {
+    			if (Yii::$app->getUser()->login($user)) {
+    				return $this->goHome();
+			    }
+		    }
+	    }
+	    */
+	    $this->layout = 'main-login';
+	    return $this->render('signup', ['model'  => $model]);
+	    
+    }
+    
+    
+    
 }

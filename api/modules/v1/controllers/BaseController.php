@@ -25,9 +25,9 @@
 	
 	namespace api\modules\v1\controllers;
 	
-	use yii\filters\auth\HttpBasicAuth;//增加认证类 20170411
 	use yii\rest\ActiveController;
 	use yii\web\Response;
+
 	
 	/**
 	 * Class BaseController
@@ -80,17 +80,7 @@
 			 * 内容协商 contentNegotiator 协商输出格式为json
 			 * */
 			$behaviors['contentNegotiator']['formats']['text/html'] = Response::FORMAT_JSON;
-			/*
-			 * 目的在于设置授权认证体系  设置成功 首页访问正常
-			 * 目前只调用HTTP基础认证
-			 * 开启该方法 所有继承这个基础控制器的子控制器都对访问进行控制
-			 * 基于基本HTTP 授权控制
-			 * */
-			/*
-			$behaviors['authenticator'] = [
-				'class'     =>      HttpBasicAuth::className(),
-			];
-			*/
+			
 			
 			return $behaviors;
 		}

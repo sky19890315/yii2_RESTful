@@ -55,12 +55,7 @@ $fieldOptions2 = [
 
         <div class="social-auth-links text-center">
             <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i>
-                待加入功能预留1
-            </a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i>
-                待加入功能预留2
-            </a>
+          
         </div>
         <!-- /.social-auth-links -->
 

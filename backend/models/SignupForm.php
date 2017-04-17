@@ -4,7 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\base\Model;
-use backend\models\UserBackend;
+use backend\models\AdminUser;
 
 /**
  * Class SignupForm
@@ -72,7 +72,7 @@ class SignupForm extends Model
 		
 		//满足以上条件，写入数据库
 		//将当前获得的值赋予对象并写入数据库
-		$user = new UserBackend();
+		$user = new AdminUser();
 		$user->username     =   $this->username;
 		$user->email        =   $this->email;
 		$user->created_at   =   $this->created_at;

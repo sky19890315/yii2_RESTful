@@ -4,7 +4,7 @@ namespace common\models;
 use Yii;
 
 //调用登录设置  将user设置为后台的user
-use backend\models\UserBackend as User;
+use backend\models\AdminUser as User;
 use yii\base\Model;
 
 /**

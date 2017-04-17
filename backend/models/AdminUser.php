@@ -19,7 +19,7 @@ use yii\db\ActiveRecord;
  * @property string $updated_at
  * 调用接口来实现
  */
-class UserBackend extends ActiveRecord implements IdentityInterface
+class AdminUser extends ActiveRecord implements IdentityInterface
 {
     /**
      * @inheritdoc
@@ -47,17 +47,18 @@ class UserBackend extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      * 显示表的信息 如果有备注显示备注
+     * 修改将会修改表单上显示的结果
      */
     public function attributeLabels()
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'email' => 'Email',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'username' => '用户名',
+            'auth_key' => '认证密钥',
+            'password_hash' => '密码',
+            'email' => '邮箱',
+            'created_at' => '创建时间',
+            'updated_at' => '更新时间',
         ];
     }
     

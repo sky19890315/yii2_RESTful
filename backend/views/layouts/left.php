@@ -5,7 +5,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/test.gif" class="img-circle" alt="User Image"/>
+                <img src="<?= $directoryAsset ?>/img/admin.jpeg" class="img-circle" alt="User Image"/>
             </div>
             <div class="pull-left info">
                 <p>超级管理员</p>
@@ -42,7 +42,7 @@
 					['label' => '权限系统', 'icon' => 'fa fa-unlock-alt', 'url' => ['/rbac/index']],
 					
                     /*增加跳转去用户管理*/
-					['label' => '用户管理', 'icon' => 'fa fa-users', 'url' => ['/user-backend']],
+					['label' => '用户管理', 'icon' => 'fa fa-users', 'url' => ['/admin-user']],
                     
                     /*文件上传管理*/
 					['label' => '文件上传', 'icon' => 'fa fa-cloud-upload', 'url' => ['/upload/upload']],

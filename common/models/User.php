@@ -30,6 +30,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\filters\RateLimitInterface;
 
 /**
  * User model
@@ -45,6 +46,8 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  *
+ *
+ * 这个模型不是自动生成的 是框架自带的 基本上所有的验证都走这个模型
  * 已经通过实现认证接口 来完成认证任务
  * 我创建了一个用户类User 继承了 ActiveRecord 类 实现了 IdentityInterface 接口
  *
@@ -52,9 +55,12 @@ use yii\web\IdentityInterface;
  * API 的设计原则 只完成接口要做的事情 其它事情不去做
  * 所以以上的验证应该放入后台管理  在后台管理分配角色等
  * 这边只做验证使用
+ *
+ * 2017-04-17 开始接入请求频率限制接口
+ * 频率请求接口里面只有三个接口 通通实现
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
 {
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
@@ -272,9 +278,42 @@ class User extends ActiveRecord implements IdentityInterface
     	
     	return $timestamp + $expire >= time();
     }
-    
-    
-    
-
-    
+	
+	/**
+	 * 日期：2017-04-17
+	 * 返回某一时间允许请求的最大数量，比如设置10秒内最多5次请求（小数量方便我们模拟测试）
+	 * @author sky 296675685@qq.com
+	 * @param \yii\web\Request $request
+	 * @param \yii\base\Action $action
+	 * @return array
+	 */
+    public function getRateLimit ($request, $action)
+    {
+	    return [5, 10];
+    }
+	
+	/**
+	 * 返回剩余的允许的请求和相应的UNIX时间戳数 当最后一次速率限制检查时
+	 * @param \yii\web\Request $request
+	 * @param \yii\base\Action $action
+	 * @return array
+	 */
+    public function loadAllowance ($request, $action)
+    {
+	    return [$this->allowance, $this->allowance_updated_at];
+    }
+	
+	/**
+	 * 保存允许剩余的请求数和当前的UNIX时间戳
+	 * @param \yii\web\Request $request
+	 * @param \yii\base\Action $action
+	 * @param int              $allowance
+	 * @param int              $timestamp
+	 */
+    public function saveAllowance ($request, $action, $allowance, $timestamp)
+    {
+    	$this->allowance = $allowance;
+    	$this->allowance_updated_at = $timestamp;
+    	$this->save();
+    }
 }

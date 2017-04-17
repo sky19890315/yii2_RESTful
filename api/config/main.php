@@ -30,6 +30,11 @@ $params = array_merge(
         */
 
 return [
+	
+	/**
+	 * 2016-04-16 调用后台的验证机制
+	 *
+	 */
     
     /*
      * 目前在用版本的restful端
@@ -112,14 +117,30 @@ return [
     ],
 	
     'controllerNamespace' => 'api\controllers',
-    'components' => [
 	
+	
+	
+	
+	/**
+	 * 应用主体是服务定位器， 它部署一组提供各种不同功能的 应用组件 来处理请求。
+	 * 例如，urlManager组件负责处理网页请求路由到对应的控制器。 db组件提供数据库相关服务等等。
+	 * 例如，可以使用 \Yii::$app->db 来获取到已注册到应用的 DB connection，
+	 * 使用 \Yii::$app->cache 来获取到已注册到应用的 primary cache。
+	 * 第一次使用以上表达式时候会创建应用组件实例， 后续再访问会返回此实例，无需再次创建。
+	 *  请谨慎注册太多应用组件， 应用组件就像全局变量， 使用太多可能加大测试和维护的难度。
+	 * 一般情况下可以在需要时再创建本地组件。
+	 * 所有注册进组件内的组件ID  都可以直接通过 \Yii::$app->compontID 来调用 所以要求组件 id 独一无二
+	 *
+	 */
+    'components' => [
 	    /**
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     * 2017-04-14
 	     * 增加 oauth2 认证体系 如果出bug 可以考虑和是和 basic 认证冲突  basic认证为4-11 增加内容
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
+	    
+	    
 		'authClientCollection'  => [
 			'class' =>  'yii\authclient\Collection',
 	    
@@ -133,6 +154,7 @@ return [
 	         ],
 	    ],
 
+			
     ], //end of auth
 	    
 	    
@@ -145,15 +167,40 @@ return [
 	     * 配置用户的相关信息  关闭session
 	     * 设置 loginUrl 属性为null 显示一个HTTP 403 错误而不是跳转到登录界面.
 	     * 在你的user identity class 类中实现 yii\web\IdentityInterface::findIdentityByAccessToken() 方法.
+	     *
+	     * 2017-04-17 修改为后台验证机制，并启用session功能  session 和后台保持一致
+	     * 只要后台登录，则这里也保持登录状态
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
+	    
+	    /*
 	    'user' => [
-		    'identityClass' => 'common\models\User',
-		    //启用自动登录功能
-		    'enableAutoLogin' => true,
-		    'identityCookie' => ['name' => '_identity-api', 'httpOnly' => true],
-		    //关闭session功能
-		    'enableSession' =>  false,
+		
+		    
+		      调用与后台一致的验证机制
+		     默认类修改为后台管理验证机制
+		     避免与前台发生冲突
+		     
+		    'identityClass'     =>      'backend\models\AdminUser',
+		    'enableAutoLogin'   =>      true,
+		    // 'identityCookie'    =>      ['name' => '_identity-backend', 'httpOnly' => true],
+	    ],
+	    */
+		
+		'user' => [
+			'identityClass' => 'common\models\User',
+			'enableAutoLogin' => true,
+			'enableSession'=>false
+		],
+	    
+	    
+	    'session' => [
+		
+		    /**
+		     * this is the name of the session cookie used for login on the backend
+		     * 区分出前后台的session是为了解决后台登录后 前台也登录的问题
+		     */
+		    'name' => 'advanced-backend',
 	    ],
 	
 	    /**
@@ -162,6 +209,9 @@ return [
 	     * @author sky
 	     * 296675685@qq.com
 	     * 日期：2017-04-12
+	     *
+	     * 日期 ：2017-04-16
+	     * 启用后台管理页面的验证机制
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
 	    'authManager'   => [
@@ -190,11 +240,7 @@ return [
 	        	'application/json' => 'yii\web\JsonParser',
 	        ],
         ],
-     
-        'session' => [
-            // this is the name of the session cookie used for login on the api
-            'name' => 'advanced-api',
-        ],
+	    
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -208,6 +254,7 @@ return [
 	
 	    /**
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	     * urlManager组件负责处理网页请求路由到对应的控制器。
 	     * 改动这里面的代码绝对会产生神奇的效果
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
@@ -266,6 +313,7 @@ return [
 		    * 通过get方法的登录 和用户配置
 		    * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		    */
+		   
 		    'extraPatterns'     =>   [
 		        'POST login'        =>   'login',
 			    'GET signup-test'   =>    'signup-test',
