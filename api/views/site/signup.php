@@ -24,6 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'email') ?>
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
+                
+                <?= $form->field($model, 'created_at')->fileInput()?>
+	
+	            <?= $form->field($model, 'updated_at')->fileInput()?>
 
                 <div class="form-group">
                     <?= Html::submitButton('Signup', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>

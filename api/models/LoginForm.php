@@ -58,7 +58,7 @@ class LoginForm extends Model
 	/**
 	 * 对用户输入的密码进行验证 错误直接返回错误信息
 	 */
-	public function validatePassword()
+	public function validatePassword($attribute, $params)
 	{
 		if (!$this->hasErrors()) {
 			$this->_user = $this->getUser();

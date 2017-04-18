@@ -119,12 +119,16 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
 	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	 *
 	 * 根据 token 查询身份。
-	 *
+	 * 2017-04-18 将下面字段修改为api_token
+	 * access_token' => $token
 	 *
 	 */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-    	return static::findOne(['access_token' => $token]);
+	    /**
+	     * 如下的字段应该对应好相对的时间
+	     */
+    	return static::findOne(['api_token' => $token]);
     }
 
     /**
@@ -258,7 +262,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
     public function generateApiToken()
     {
     	//拼接生成的api
-	    $this->api_token = Yii::$app->security->generateRandomString().'_'.time();
+	    $this->api_token = Yii::$app->security->generateRandomString().'_'.time().'.'.'api.prmeasure.com';
     }
 	
 	/**

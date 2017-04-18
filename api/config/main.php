@@ -186,6 +186,10 @@ return [
 		    // 'identityCookie'    =>      ['name' => '_identity-backend', 'httpOnly' => true],
 	    ],
 	    */
+	
+	    /**
+	     * 选用该认证类 并且关闭session 2017-04-18
+	     */
 		
 		'user' => [
 			'identityClass' => 'common\models\User',
@@ -270,6 +274,16 @@ return [
 	               * 解决启用'enableStrictParsing' =>true,抛出的404错误
 	               * 这种拉风的写法虽然没什么卵用 但是看起来舒服
 	               * @author sky 296675685@qq.com
+	               *
+	               * rules包含着我们配置的路由规则列表，当解析一个路由或者生成一个路由的时候，
+	               * 匹配规则的顺序是从第一条规则开始，知道匹配到第一个满足的为止。
+	               *  '/blogs' => '/blog/index',
+	               * 这其实就是把我们访问的/blogs路由映射到/blog/index路由上面了，
+	               * 所以我们访问/blogs才得以被解析并能正常访问/blog/index页面。
+	               *
+	               * 如果我们要求访问/blogs/1可以展示/blog/view?id=1这个界面呢？
+	               * 实际上/blog/view?id=1需要一个参数是id，我们可以这样做一个映射
+	               * '/blogs/<id:\d+>' => '/blog/view',
 	               * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	               */
 	        '/' => 'site/index',
