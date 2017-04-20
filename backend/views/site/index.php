@@ -6,7 +6,12 @@
 <div class="bg-info">
     <br />
     <br />
-<h2 class="bg-primary text-center">欢迎登录<strong>PRMEASURE</strong>后台管理系统</h2>
+<div class="row">
+    <h2 class="text-center">欢迎登录<strong>PRMEASURE</strong>后台管理系统</h2>
+</div>
+
+    
+
 <h3 class="bg-info text-center">当前系统时间: <?= date("北京时间Y年m月d日H:i:s"); ?></h3>
 <br />
 <br />
@@ -16,21 +21,33 @@
 
         <!-- Split button -->
         <div class="btn-group">
-            <button type="button" class="btn btn-warning">用户管理</button>
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	
+	        <?= Html::a('前台用户管理', 'user/index', ['class' => 'btn btn-warning']) ?>
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#">用户列表</a></li>
-                <li><a href="#">增加用户</a></li>
-                <li><a href="#">更新用户</a></li>
+                <li><?= Html::a('创建用户', 'user/create', ['class' => 'btn btn-info']) ?></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">删除用户</a></li>
+            </ul>
+         
+        </div>
+            <!--前后台用户分隔符--> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--前后台用户分隔符-->
+        
+        <div class="btn-group">
+	        <?= Html::a('后台用户管理', 'admin-user/index', ['class' => 'btn btn-warning']) ?>
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><?= Html::a('创建用户', 'admin-user/create', ['class' => 'btn btn-info']) ?></li>
+                <li role="separator" class="divider"></li>
             </ul>
         </div>
         
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <!--中间有实体符-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--中间有实体符-->
         <!-- Split button -->
         <div class="btn-group">
             <button type="button" class="btn btn-warning">路由管理</button>
@@ -53,27 +70,19 @@
     </div>
     <br />
     <br />
+    <br />
+    <br />
+    
     <div class="row">
-        <a href="http://api.prmeasure.com"> <button type="button" class="btn btn-success">前往PRMEASURE API系统</button></a>
+        <a href="http://api.prmeasure.com"> <button type="button" class="btn btn-success">PRMEASURE API系统</button></a>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="http://back.com/user/signup"> <button type="button" class="btn btn-success">API认证用户注册</button></a>
     </div>
     <hr />
 
     <br />
-
-
-
     <br />
     <br />
-    
-    <?php
-    $form = ActiveForm::begin([
-    'method' => 'post',
-    'action' => ['site/logout'],
-    ]);
-    ?>
-    <?= Html::submitButton('退出后台管理系统', ['class' => 'btn btn-danger']) ?>
-    <?php ActiveForm::end(); ?>
-    
     <br />
     <br />
 </div>

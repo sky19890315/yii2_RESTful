@@ -4,25 +4,24 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AdminUser */
+/* @var $model backend\models\User */
 /* @var $form yii\widgets\ActiveForm */
-	/**
-	 * 该表单为更新和创建新用户共用
-	 */
 ?>
 
-<div class="admin-user-form">
+<div class="user-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'username')->textInput(['maxlength' => true]) ?>
-	
-	<?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
+
     <?= $form->field($model, 'password_hash')->textInput(['maxlength' => true]) ?>
 
- 
+   
+
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
     
+
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? '创建' : '更新', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>

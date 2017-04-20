@@ -51,8 +51,9 @@ class SignupForm extends Model
         $user->username = $this->username;
         $user->email = $this->email;
         $user->setPassword($this->password);
+        
+        
         $user->generateAuthKey();
-        //增加生成api
 	    $user->generateApiToken();
         
         return $user->save() ? $user : null;

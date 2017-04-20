@@ -1,6 +1,11 @@
 <?php
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
+use yii\widgets\Breadcrumbs;
+use frontend\assets\AppAsset;
+use common\widgets\Alert;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -19,21 +24,70 @@ $fieldOptions2 = [
 ];
 ?>
 
+
+AppAsset::register($this);
+?>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<?= Html::csrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+	<?php $this->head() ?>
+</head>
+<body>
+<?php $this->beginBody() ?>
+
+<div class="wrap">
+	<?php
+		NavBar::begin([
+			'brandLabel' => '后台首页',
+			'brandUrl' => Yii::$app->homeUrl,
+			'options' => [
+				'class' => 'navbar-inverse navbar-fixed-top',
+			],
+		]);
+		$menuItems = [
+			['label' => 'Home', 'url' => ['/site/index']],
+		];
+		if (Yii::$app->user->isGuest) {
+			$menuItems[] = ['label' => '注册', 'url' => ['/site/signup']];
+			$menuItems[] = ['label' => '登录', 'url' => ['/site/login']];
+		} else {
+			$menuItems[] = '<li>'
+				. Html::beginForm(['/site/logout'], 'post')
+				. Html::submitButton(
+					'Logout (' . Yii::$app->user->identity->username . ')',
+					['class' => 'btn btn-link logout']
+				)
+				. Html::endForm()
+				. '</li>';
+		}
+		echo Nav::widget([
+			'options' => ['class' => 'navbar-nav navbar-right'],
+			'items' => $menuItems,
+		]);
+		NavBar::end();
+	?>
+
+    <div class="container">
+
 <div class="login-box">
     <div class="login-logo">
-        <a href="#"><b>PRMEASURE</b>管理系统</a>
+        <h3> 欢迎登录<a href="#"><b>PRMEASURE</b>管理系统</a> </h3>
     </div>
     <!-- /.login-logo -->
     <div class="login-box-body">
-        <p class="login-box-msg">请登录</p>
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-
+        用户名：
         <?= $form
             ->field($model, 'username', $fieldOptions1)
             ->label(false)
             ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-
+        密码：
         <?= $form
             ->field($model, 'password', $fieldOptions2)
             ->label(false)
@@ -60,8 +114,23 @@ $fieldOptions2 = [
         <!-- /.social-auth-links -->
 
         <a href="#">OMG！忘记密码了</a><br>
-        <a href="#" class="text-center">WOW！还没有账号？注册一个</a>
+        WOW！还没有账号？赶紧<a href="http://back.com/site/signup" class="text-center"> <span class="bg-success">注册一个</span> </a>
 
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
+
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
+
+            <p class="pull-right"><?= Yii::powered() ?></p>
+        </div>
+    </footer>
+</div>
+	
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

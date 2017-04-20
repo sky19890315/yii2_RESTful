@@ -6,6 +6,7 @@ use Yii;
 use backend\models\AdminUser;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
+use backend\models\SignupForm;
 
 
 class AdminUserController extends Controller
@@ -41,7 +42,7 @@ class AdminUserController extends Controller
 	public function actionSignup()
 	{
 		
-		$model = new \backend\models\SignupForm();
+		$model = new SignupForm();
 		
 		//判断是否是post提交且数据验证成功
 		// $model->load() 方法，实质是把post过来的数据赋值给model

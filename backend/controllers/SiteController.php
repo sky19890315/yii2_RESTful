@@ -22,7 +22,7 @@ class SiteController extends Controller
 	    return [
 	    	'access'        =>  [
 	    	    'class'     =>  AccessControl::className(),
-			    'only'  =>  ['login', 'logout', 'signup','index'],
+			    'only'  =>  ['login', 'logout','index'],
 			    'rules'     =>  [
 			    	[
 			    'allow'     =>  true,
@@ -31,7 +31,7 @@ class SiteController extends Controller
 					     * 设置角色 @ --表示当前规则针对认证过的用户
 					     * ？ --表示所有用户均可访问
 					     */
-				'actions'   =>  ['login', 'signup'],
+				'actions'   =>  ['login'],
 				'roles' =>  ['?'],
 		            ],
 				    /**
@@ -55,24 +55,7 @@ class SiteController extends Controller
 		    
 	    
 	    //修复无法登录的问题↑
-	    
-	    /**
-	     * 日期 2017-04-14 增加首页缓存机制 在一定时间内访问后台首页 将调用本地缓存文件
-	     *  @param Action $action 当前处理的动作对象
-	     *  @param array $params “params” 属性的值
-	     *  @return int 页面修改时的 Unix 时间戳
-	     * 上述代码表明 HTTP 缓存只在 index 动作时启用。
-	     */
-	    /*
-	    [
-	    	'class'         =>  'yii\filters\HttpCache',
-		    'only'          =>  'index',
-		    'lastModified'  =>  function ($action, $params) {
-	    	    $q = new \yii\db\Query();
-	    	    return $q->from('post')->max('update_at');
-		    }
-	    ],
-	*/
+
 	    ]; //end of return
 	    
     }
@@ -155,18 +138,18 @@ class SiteController extends Controller
     	$model = new SignupForm();
 	    /**
 	     * 如果是已经登录的用户直接去首页
-	     * 否则清登录页面
+	     * 删除登录的方法 注册完成直接去首页
 	     */
-	    /*
+	    
     	if ($model->load(Yii::$app->request->post())) {
     		if ($user = $model->signup()) {
-    			if (Yii::$app->getUser()->login($user)) {
+    			
     				return $this->goHome();
-			    }
+			    
 		    }
 	    }
-	    */
-	    $this->layout = 'main-login';
+	    
+	    $this->layout = 'main-signup';
 	    return $this->render('signup', ['model'  => $model]);
 	    
     }

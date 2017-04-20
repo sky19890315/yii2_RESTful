@@ -12,30 +12,35 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="admin-user-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1>用户ID：<?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('删除', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+
 
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'username',
             'auth_key',
-            'password_hash',
             'email:email',
             'created_at',
             'updated_at',
         ],
     ]) ?>
 
+    <p>
+		
+       
+		<?= Html::a('删除', ['delete', 'id' => $model->id], [
+			'class' => 'btn btn-danger',
+			'data' => [
+				'confirm' => '请确认是否删除这条记录?',
+				'method' => 'post',
+			],
+		]) ?>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <?= Html::a('更新', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	    <?= Html::a('返回', 'index', ['class' => 'btn btn-primary']) ?>
+    </p>
+    
 </div>

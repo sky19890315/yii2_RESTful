@@ -69,7 +69,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
 	/**
 	 * @return string
 	 * 制定要查询的表  通过yii2 的特殊认证方法 取得user表名
-	 *
+	 * 关联到前台用户数据表
 	 */
     public static function tableName()
     {

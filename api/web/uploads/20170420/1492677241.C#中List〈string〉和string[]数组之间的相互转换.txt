@@ -1,0 +1,9 @@
+1,从System.String[]转到List<System.String>
+System.String[] str={"str","string","abc"};
+List<System.String> listS=new List<System.String>(str);
+ 
+2, 从List<System.String>转到System.String[]
+List<System.String> listS=new List<System.String>();
+listS.Add("str");
+listS.Add("hello");
+System.String[] str=listS.ToArray();

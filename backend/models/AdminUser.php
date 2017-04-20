@@ -75,15 +75,19 @@ class AdminUser extends ActiveRecord implements IdentityInterface
 	
 	
 	/**
-	 * @param mixed $token
-	 * @param null  $type
-	 * @throws NotSupportedException
+	 *
+	 *
+	 *
 	 * 根据accesss_token获取用户信息
+	 *
+	 * 2017-04-19 这里有一个bug  即user_backend表中 并没有api_token字段
+	 * 需要后期加入修改 并去修改登录表单 让其自动生成api_token
+	 * 才算是完成这个验证   直接去修改用户表
+	 *
 	 */
 	public static function findIdentityByAccessToken ($token, $type = null)
 	{
-		//暂时先不启用 直接抛出异常 暂时不提供这个方法
-		throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
+		return static::findOne(['api_token' => $token]);
 	}
 	
 	/**

@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\AdminUser */
+/* @var $model backend\models\User */
 
-$this->title = '创建后台用户';
-$this->params['breadcrumbs'][] = ['label' => 'Admin Users', 'url' => ['index']];
+$this->title = 'Create User';
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="admin-user-create">
+<div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

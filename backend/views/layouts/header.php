@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -55,11 +56,14 @@ use yii\helpers\Html;
                                 <a href="#" class="btn btn-default btn-flat">配置文件</a>
                             </div>
                             <div class="pull-right">
-                                <?= Html::a(
-                                    '退出登录',
-                                    ['/site/logout'],
-                                    ['data-method' => 'post', 'class' => 'btn btn-default btn-flat']
-                                ) ?>
+	                            <?php
+		                            $form = ActiveForm::begin([
+			                            'method' => 'post',
+			                            'action' => ['site/logout'],
+		                            ]);
+	                            ?>
+	                            <?= Html::submitButton('退出系统', ['class' => 'btn btn-danger']) ?>
+	                            <?php ActiveForm::end(); ?>
                             </div>
                         </li>
                     </ul>

@@ -18,11 +18,13 @@
 		/**
 		 * @return array
 		 * 验证规则
+		 *
+		 * , 'extensions' => 'jpg, png, jpeg', 'mimeTypes' => 'image/jpeg, image/png'
 		 */
 		public function rules ()
 		{
 			return [
-				[['file'], 'file', 'extensions' => 'jpg, png, jpeg', 'mimeTypes' => 'image/jpeg, image/png'],
+				[['file'], 'file'],
 			];
 		}
 		
