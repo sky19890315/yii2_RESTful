@@ -7,10 +7,62 @@ use backend\models\AdminUser;
 use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use backend\models\SignupForm;
+use backend\models\AdminUserSearch;
+use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
 
-
+/**
+ * Class AdminUserController
+ * @package backend\controllers
+ * AdminUserController implements the CRUD actions for AdminUser model.
+ */
 class AdminUserController extends Controller
 {
+	/**
+	 * 首先定义了相关的动作 即删除指定post方式才能访问
+	 * 其实创建用户 应该也规定只能使用post方式
+	 */
+	public function behaviors()
+	{
+		return [
+			
+			/*
+			 * 根据这个特色来设置的 即应该所有的管理员控制动作
+			 * 都需要已经登录的用户才可以进行设置
+			 * 未登录用户绝对不能对这个进行操作
+			 */
+			
+			
+			
+			'access'        =>  [
+				'class'     =>  AccessControl::className(),
+				'only'  =>  ['index', 'create','update','delete', 'view'],
+				'rules'     =>  [
+				
+					/**
+					 * 只有已经登录的用户才能退出
+					 */
+					[
+						'actions'   =>  ['index', 'create','update','delete', 'view'],
+						'allow'     =>  true,
+						//角色
+						'roles'     =>  ['@'],
+					],
+				],
+			], //access结束
+			
+			
+			
+			
+			'verbs' => [
+				'class' => VerbFilter::className(),
+				'actions' => [
+					'delete, create, update' => ['POST'],
+				],
+			],
+		];
+	}
 	
 	/**
 	 * @return string
@@ -22,45 +74,20 @@ class AdminUserController extends Controller
 	 */
     public function actionIndex()
     {
-	    //实例化
 	    
-	    $model = new AdminUser();
-	    
-	    $dataProvider =new ActiveDataProvider([
-		    'query'         => $model->find(),
-		    'pagination'    =>  [
-			    'pagesize'  =>  '10',
-		    ]
+	    $searchModel = new AdminUserSearch();
+	    $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+	    return $this->render('index', [
+		    'searchModel' => $searchModel,
+		    'dataProvider' => $dataProvider,
 	    ]);
 	    
-	     return $this->render('index', ['model' => $model, 'dataProvider' => $dataProvider]);
-	    
-	   
     }
 	
-    //创建新用户
-	public function actionSignup()
-	{
-		
-		$model = new SignupForm();
-		
-		//判断是否是post提交且数据验证成功
-		// $model->load() 方法，实质是把post过来的数据赋值给model
-		// $model->signup() 方法, 是我们要实现的具体的添加用户操作
-		
-		if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-			return $this->redirect(['index']);
-		}
-		
-		//渲染表单
-		return $this->render('signup', ['model' => $model,]);
-		
-		/**
-		 * Displays a single AdminUser model.
-		 * @param integer $id
-		 * @return mixed
-		 */
-	}
+	/**
+	 * @param $id
+	 * @return string
+	 */
 		public function actionView ($id)
 		{
 			return $this->render('view', ['model' => $this->findModel($id),]);
@@ -74,10 +101,11 @@ class AdminUserController extends Controller
 		public function actionCreate ()
 		{
 			$model = new AdminUser();
+			
 			if ($model->load(Yii::$app->request->post()) && $model->save()) {
 				return $this->redirect(['view', 'id' => $model->id]);
 			} else {
-				return $this->render('create', ['model' => $model,]);
+				return $this->render('create', ['model' => $model]);
 			}
 		}
 		
@@ -128,7 +156,7 @@ class AdminUserController extends Controller
 			}
 		}
 		
-	
+		
 		
 		
 }

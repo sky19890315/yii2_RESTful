@@ -58,6 +58,8 @@ return [
     ],
 	
     'components' => [
+	
+	'language' => 'zh-CN',
         //增加
         'assetManager' => [
             'bundles' => [

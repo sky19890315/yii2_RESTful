@@ -5,11 +5,17 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 use backend\models\SignupForm;
 
 /**
  * Site controller
+ * 首先这个是默认首页
+ * 所有用户登录back.com 都会导向他们来到site/index页面
+ * 第二 ？ 表示未登录用户 即游客用户可访问  已登录用户无法访问
+ * 这是基于AFC的访问控制 比较简单粗暴
+ * 第三 @ 表示已登录用户可以访问  未登录用户无法访问  这个可以做一些简单的用户判断
+ * 总不能未登录用户就能访问了把
  */
 class SiteController extends Controller
 {
@@ -22,7 +28,7 @@ class SiteController extends Controller
 	    return [
 	    	'access'        =>  [
 	    	    'class'     =>  AccessControl::className(),
-			    'only'  =>  ['login', 'logout','index'],
+			    'only'  =>  ['login', 'logout','index', 'upload'],
 			    'rules'     =>  [
 			    	[
 			    'allow'     =>  true,
@@ -38,7 +44,7 @@ class SiteController extends Controller
 				     * 只有已经登录的用户才能退出
 				     */
 				    [
-				'actions'   =>  ['logout','index'],
+				'actions'   =>  ['logout', 'upload', 'index'],
 				'allow'     =>  true,
 				//角色
 				'roles'     =>  ['@'],
@@ -97,9 +103,13 @@ class SiteController extends Controller
             return $this->goHome();
         }
 		
-        //调用前段登录模型
+        /*
+         * 因为前后端共用登录表单会导致一些莫名的bug
+         * 比如无法登录等  故将前后端登录表单进行分离验证
+         */
         $model = new LoginForm();
         
+      
         //接收表单数据并调用登录方法
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
@@ -112,6 +122,7 @@ class SiteController extends Controller
 	         */
 	        
 	        $this->layout = 'main-login';
+	        
             return $this->render('login', [
                 'model' => $model,
             ]);
@@ -135,18 +146,17 @@ class SiteController extends Controller
 	 */
     public function actionSignup()
     {
+    	/*
+    	 * 调用后端登录表单实现登录
+    	 */
     	$model = new SignupForm();
 	    /**
 	     * 如果是已经登录的用户直接去首页
 	     * 删除登录的方法 注册完成直接去首页
 	     */
 	    
-    	if ($model->load(Yii::$app->request->post())) {
-    		if ($user = $model->signup()) {
-    			
-    				return $this->goHome();
-			    
-		    }
+    	if ($model->load(Yii::$app->request->post()) && $model->signup()) {
+    		return $this->redirect('index');
 	    }
 	    
 	    $this->layout = 'main-signup';

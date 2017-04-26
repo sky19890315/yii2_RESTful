@@ -4,7 +4,7 @@ namespace common\models;
 use Yii;
 
 //调用登录设置  将user设置为后台的user
-use backend\models\AdminUser as User;
+// use backend\models\AdminUser as User;
 use yii\base\Model;
 
 /**
@@ -47,7 +47,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
         	//获取当前用户
             $user = $this->getUser();
-	
+	        
 	        // 获取到用户信息，然后校验用户的密码对不对，校验密码调用的是 backend\models\UserBackend
 	        // 的validatePassword方法，
 	        // 这个我们下面会在UserBackend方法里增加

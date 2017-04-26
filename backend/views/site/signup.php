@@ -19,17 +19,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin(['id' => 'form-signup']); ?>
 
-                <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+                <?= $form->field($model, 'username')->label('用户名')->textInput(['autofocus' => true]) ?>
 
-                <?= $form->field($model, 'email') ?>
+                <?= $form->field($model, 'email')->label('邮箱') ?>
 
-                <?= $form->field($model, 'password')->passwordInput() ?>
-
-                <div class="form-group">
+                <?= $form->field($model, 'password')->label('密码')->passwordInput() ?>
+                
+            <div class="form-group">
                     <?= Html::submitButton('注册', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <!--中间有尸体--> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!--中间有尸体-->
+	                <?= Html::a('取消', ['site/index'], ['class' => 'btn btn-warning']) ?>
                 </div>
-
             <?php ActiveForm::end(); ?>
+	       
+            
         </div>
     </div>
 </div>

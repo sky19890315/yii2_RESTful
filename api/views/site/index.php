@@ -35,7 +35,13 @@
     <h1 class="nav"><?= Html::encode($this->title) ?></h1>
 
     <p >Version:v1 time:<?php echo date("北京时间Y年m月d日H:i:s");?></p>
-    
+    <div>
+        <pre>
+认证方式： HTTPBASICAUTH
+请求注册地址：<a href="site/signup">api.prmeasure.com/site/signup</a>
+测试登录：<a href="site/login">api.prmeasure.com/site/login</a>
+        </pre>
+    </div>
     <h3 >请求示例</h3>
     <p ><b>请求：</b>api.prmeasure\v1\stations &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations资源</p>
     <p ><b>请求：</b>api.prmeasure\v1\stations\1 &nbsp;&nbsp;&nbsp;&nbsp;<b>返回：</b>stations中id为1的资源</p>
@@ -98,6 +104,6 @@
         500: 内部服务器错误。 这可能是由于内部程序错误引起的。
         </pre>
     </div>
-
+   
 </body>
 </html>

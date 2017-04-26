@@ -46,6 +46,8 @@ class Users extends \yii\db\ActiveRecord
 
     /**
      * @inheritdoc
+     * 这个表中列出了模型的属性
+     * 也就是一一对应到关联数据表中的内容
      */
     public function attributeLabels()
     {
@@ -62,4 +64,21 @@ class Users extends \yii\db\ActiveRecord
             'api_token' => 'Api Token',
         ];
     }
+	
+	/**
+	 * @return array
+	 * 过滤字段
+	 */
+    public function fields ()
+    {
+	   return [
+		   'id' ,
+		   'username',
+		   'email' ,
+	   ];
+	    
+	    
+    }
+	
+	
 }

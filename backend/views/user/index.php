@@ -6,7 +6,7 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = '用户列表';
+$this->title = '前台用户';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
@@ -19,13 +19,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+           // ['class' => 'yii\grid\SerialColumn'],
             'id',
             'username',
              'email:email',
              'api_token',
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 </div>
+<?= Html::a('返回', ['site/index'], ['class' => 'btn btn-warning']) ?>

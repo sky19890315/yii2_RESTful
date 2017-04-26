@@ -25,9 +25,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="form-group">
                     <?= Html::submitButton('注册', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
+                    <!--中间有尸体--> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!--中间有尸体-->
+                    <?= Html::a('取消', ['site/index'], ['class' => 'btn btn-warning']) ?>
                 </div>
 
             <?php ActiveForm::end(); ?>
+	
+	       
         </div>
     </div>
 </div>

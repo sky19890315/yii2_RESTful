@@ -82,15 +82,15 @@ AppAsset::register($this);
     <div class="login-box-body">
 
         <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
-        用户名：
+        
         <?= $form
             ->field($model, 'username', $fieldOptions1)
-            ->label(false)
+            ->label('用户名')
             ->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
-        密码：
+        
         <?= $form
             ->field($model, 'password', $fieldOptions2)
-            ->label(false)
+            ->label('密码')
             ->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
@@ -103,8 +103,7 @@ AppAsset::register($this);
             </div>
             <!-- /.col -->
         </div>
-
-
+        
         <?php ActiveForm::end(); ?>
 
         <div class="social-auth-links text-center">
@@ -114,20 +113,13 @@ AppAsset::register($this);
         <!-- /.social-auth-links -->
 
         <a href="#">OMG！忘记密码了</a><br>
-        WOW！还没有账号？赶紧<a href="http://back.com/site/signup" class="text-center"> <span class="bg-success">注册一个</span> </a>
-
+        WOW！还没有账号？赶紧  <?= Html::a('注册', ['site/signup'], ['class' => 'btn btn-success']) ?>  一个吧！
     </div>
     <!-- /.login-box-body -->
 </div><!-- /.login-box -->
 
     </div>
-    <footer class="footer">
-        <div class="container">
-            <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-            <p class="pull-right"><?= Yii::powered() ?></p>
-        </div>
-    </footer>
+   
 </div>
 	
 <?php $this->endBody() ?>

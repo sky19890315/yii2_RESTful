@@ -31,6 +31,10 @@ $params = array_merge(
 
 return [
 	
+	
+	
+	
+	
 	/**
 	 * 2016-04-16 调用后台的验证机制
 	 *
@@ -139,24 +143,11 @@ return [
 	     * 增加 oauth2 认证体系 如果出bug 可以考虑和是和 basic 认证冲突  basic认证为4-11 增加内容
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
-	    
-	    
-		'authClientCollection'  => [
-			'class' =>  'yii\authclient\Collection',
-	    
-	    'clients'    =>  [
-	         'myserver' =>  [
-	         	'class'         => 'yii\authclient\OAuth2',
-		        'clientId'      =>  'unique clent_id',
-		        'clientSecret'  =>  'client_secret',
-		         'tokenUrl'     =>  'http://api.prmeasure.com/auth/token',
-		         'apiBasicUrl'  =>  'http://api.prmeasure.com/api',
-	         ],
+	    'user' => [
+		    'identityClass' => 'common\models\User',
+		    'enableAutoLogin' => true,
+		    'enableSession' => false,
 	    ],
-
-			
-    ], //end of auth
-	    
 	    
 	    /**
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -173,19 +164,6 @@ return [
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
 	    
-	    /*
-	    'user' => [
-		
-		    
-		      调用与后台一致的验证机制
-		     默认类修改为后台管理验证机制
-		     避免与前台发生冲突
-		     
-		    'identityClass'     =>      'backend\models\AdminUser',
-		    'enableAutoLogin'   =>      true,
-		    // 'identityCookie'    =>      ['name' => '_identity-backend', 'httpOnly' => true],
-	    ],
-	    */
 	
 	    /**
 	     * 选用该认证类 并且关闭session 2017-04-18
@@ -233,7 +211,7 @@ return [
 	     * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 	     */
        'response' => [
-            'format' => yii\web\Response::FORMAT_JSON,
+	       'format' =>  'json',
 	       'charset' => 'UTF-8',
         ],
         
@@ -316,7 +294,7 @@ return [
 	          */
 	        ['class'      =>    'yii\rest\UrlRule',
 		       
-		     'controller' => ['v1/stations', 'v1/users', 'v1/upload', 'v1/admins', 'v1/testorders' ],
+		     'controller' => ['v1/stations', 'v1/users', 'v1/upload', 'v1/admins', 'v1/testorders','v1/cars' ],
 		        
 		   /**
 		    * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

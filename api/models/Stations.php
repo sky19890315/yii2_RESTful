@@ -3,6 +3,7 @@
 namespace api\models;
 
 use Yii;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "StationInfo".
@@ -13,7 +14,7 @@ use Yii;
  * @property string $LastActiveTime
  * @property string $MeterChannel
  */
-class Stations extends \yii\db\ActiveRecord
+class Stations extends ActiveRecord
 {
     /**
      * @inheritdoc
@@ -48,4 +49,15 @@ class Stations extends \yii\db\ActiveRecord
             'MeterChannel' => 'Meter Channel',
         ];
     }
+    
+    /*
+    public function fields ()
+    {
+	    return [
+	        'Station_id',
+		    'Area',
+	    ];
+    }
+	*/
+	
 }

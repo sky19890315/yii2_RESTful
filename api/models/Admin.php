@@ -46,12 +46,34 @@ class Admin extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'username' => 'Username',
-            'auth_key' => 'Auth Key',
-            'password_hash' => 'Password Hash',
-            'email' => 'Email',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
+            'username' => '用户名',
+            'auth_key' => '认证密钥',
+            'password_hash' => '密码',
+            'email' => '邮箱',
+            'created_at' => '创建时间',
+            'updated_at' => '更新时间',
         ];
     }
+	
+	/**
+	 * @return array
+	 *  指定返回的数据
+	 * 在以下表中列出的字段 即为显示在api上
+	 * 对应字段在数据表中的值
+	 */
+	public function fields ()
+	{
+		return [
+			'id' ,
+			'username',
+			'email' ,
+			'created_at',
+			
+		];
+	
+	}
+	
+
+	
+	
 }

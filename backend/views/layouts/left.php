@@ -1,3 +1,9 @@
+<?php
+    
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+    ?>
+
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -13,18 +19,7 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
             </div>
         </div>
-
-        <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>
-        <!-- /.search form -->
+        
 		
 		<?= dmstr\widgets\Menu::widget(
 			[
@@ -100,6 +95,25 @@
 				],/*end of items*/
 			]
 		) ?>
+	
+	    <?php
+            
+            echo "<br />";
+		    echo "<br />";
+		    echo "<br />";
+		    echo "<br />";
+            
+		    $form = ActiveForm::begin([
+			    'method' => 'post',
+			    'action' => ['site/logout'],
+		    ]);
+	    ?>
+	    <?= Html::submitButton('退出系统', ['class' => 'btn btn-danger btn-lg btn-block',
+	                                    'data' => [
+		                                    'confirm' => '是否确认退出系统?',
+		                                    'method' => 'post',]
+	    ]) ?>
+	    <?php ActiveForm::end(); ?>
 
     </section>
 

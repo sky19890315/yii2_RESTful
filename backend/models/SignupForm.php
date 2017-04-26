@@ -29,6 +29,8 @@ class SignupForm extends Model
 	public $email;
 	public $password;
 	
+	public $created_at;
+	public $updated_at;
 	/**
 	 * @return array
 	 *
@@ -51,7 +53,11 @@ class SignupForm extends Model
 	        
 	        //限定字符串类型 最小2 最大30
 	        ['username', 'string', 'min' => 2, 'max' => 30],
-	        
+	
+	        /**
+	         * 如果要重复密码 可以使用以下规则
+	         *  ['password', 'compare', 'compareAttribute' => 'password2', 'on' => 'register'],
+	         */
 	        //过滤邮箱
 	        ['email', 'filter', 'filter' => 'trim'],
 	        ['email', 'required', 'message' => '邮箱不能为空'],
@@ -73,6 +79,10 @@ class SignupForm extends Model
 	
 	/**
 	 * @return bool|null
+	 *
+	 * 接受用户的注册信息 并填写入数据库
+	 *
+	 *
 	 */
 	public function signup()
 	{
@@ -90,22 +100,27 @@ class SignupForm extends Model
 		//将当前获得的值赋予对象并写入数据库
 		/**
 		 * 接收用户输入部分
+		 * 将用户输入赋值给 Adminuser
+		 * 调用认证类进行加密处理
 		 */
-		$user = new AdminUser();
-		$user->username     =   $this->username;
-		$user->email        =   $this->email;
+		$user = new \backend\models\AdminUser();
+		$user->username = $this->username;
+		$user->email = $this->email;
 		$user->setPassword($this->password);
 		
-		/**
-		 * 自动生成部分
-		 */
+		//以上都是接受用户输入 并赋值给 Adminuser 模型
+		//以下为自动输入
+		$user->updated_at = time();
+		$user->created_at = time();
 		$user->generateAuthKey();
-		$user->created_at = date('Y-m-d H:i:s');
-		$user->updated_at = date('Y-m-d H:i:s');
+		$user->generaterAppId();
+		$user->generateApiToken();
+		
+		return $user->save() ? $user : null;
 		
 		// save(false)的意思是：不调用UserBackend的rules再做校验并实现数据入库操作
         // 这里这个false如果不加，save底层会调用UserBackend的rules方法再对数据进行一次校验，
 		//因为我们上面已经调用Signup的rules校验过了，这里就没必要在用UserBackend的rules校验了
-		return $user->save(false);
+		
 	}
 }

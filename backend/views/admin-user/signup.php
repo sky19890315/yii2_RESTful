@@ -21,12 +21,9 @@
             <div class="form-group">
 		        <?= Html::submitButton('添加', ['class' => 'btn btn-primary', 'name' => 'signup-button']) ?>
             </div>
-
-
-
-
-
             <?php ActiveForm::end(); ?>
+	
+	        <?= Html::a('取消注册', ['site/'], ['class' => 'btn btn-info']) ?>
         </div>
     </div>
 </div>

@@ -62,7 +62,11 @@ use yii\widgets\ActiveForm;
 			                            'action' => ['site/logout'],
 		                            ]);
 	                            ?>
-	                            <?= Html::submitButton('退出系统', ['class' => 'btn btn-danger']) ?>
+	                            <?= Html::submitButton('退出系统', ['class' => 'btn btn-danger',
+	                                                            'data' => [
+		                                                            'confirm' => '是否确认退出系统?',
+		                                                            'method' => 'post',]
+                                ]) ?>
 	                            <?php ActiveForm::end(); ?>
                             </div>
                         </li>

@@ -1,6 +1,8 @@
 <?php
 	use yii\helpers\Html;
 	use yii\widgets\ActiveForm;
+	use yii\helpers\Url;
+    use Yii;
 	?>
 
 <div class="bg-info">
@@ -28,7 +30,7 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-                <li><?= Html::a('创建用户', 'user/create', ['class' => 'btn btn-info']) ?></li>
+                <li><?= Html::a('前台注册页面', 'user/signup', ['class' => 'btn btn-info']) ?></li>
                 <li role="separator" class="divider"></li>
             </ul>
          
@@ -42,7 +44,7 @@
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-                <li><?= Html::a('创建用户', 'admin-user/create', ['class' => 'btn btn-info']) ?></li>
+                <li><?= Html::a('后台注册页面', ' site/signup', ['class' => 'btn btn-info']) ?></li>
                 <li role="separator" class="divider"></li>
             </ul>
         </div>
@@ -50,23 +52,22 @@
         <!--中间有实体符-->&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!--中间有实体符-->
         <!-- Split button -->
         <div class="btn-group">
-            <button type="button" class="btn btn-warning">路由管理</button>
-            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	        <?= Html::a('路由管理', ['admin/'], ['class' => 'btn btn-warning']) ?>
+            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="caret"></span>
                 <span class="sr-only">Toggle Dropdown</span>
             </button>
             <ul class="dropdown-menu">
-                <li><a href="#">用户权限</a></li>
-                <li><a href="#">角色列表</a></li>
-                <li><a href="#">路由菜单</a></li>
+                <li><?= Html::a('角色', ['admin/role'], ['class' => 'btn btn-info']) ?></li>
+                <li><?= Html::a('菜单', ['admin/menu'], ['class' => 'btn btn-info']) ?></li>
+                <li><?= Html::a('路由', ['admin/menu'], ['class' => 'btn btn-info']) ?></li>
                 <li role="separator" class="divider"></li>
-                <li><a href="#">路由列表</a></li>
-                <li><a href="#">增加权限</a></li>
+                <li><?= Html::a('权限', ['admin/menu'], ['class' => 'btn btn-info']) ?></li>
             </ul>
         </div>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-   
-        <a href="http://back.com/rbac/index"> <button type="button" class="btn btn-danger">权限管理</button></a>
+    <!--中间是一堆实体符-->  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!--中间是一堆实体符-->
+	    <?= Html::a('权限管理', ['rbac/index'], ['class' => 'btn btn-danger']) ?>
+        
     </div>
     <br />
     <br />
@@ -75,8 +76,12 @@
     
     <div class="row">
         <a href="http://api.prmeasure.com"> <button type="button" class="btn btn-success">PRMEASURE API系统</button></a>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="http://back.com/user/signup"> <button type="button" class="btn btn-success">API认证用户注册</button></a>
+     
+        
+        <!--中间有很多实体符号-->    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  <!--中间有很多实体符号-->
+        
+	    <?= Html::a('API认证用户注册', ['user/signup'], ['class' => 'btn btn-info']) ?>
+    
     </div>
     <hr />
 

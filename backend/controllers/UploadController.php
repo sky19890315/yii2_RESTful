@@ -11,9 +11,42 @@
 	use Yii;
 	use yii\web\Controller;
 	use yii\web\UploadedFile;
+	use yii\filters\VerbFilter;
+	use yii\filters\AccessControl;
 	
 	class UploadController extends Controller
 	{
+		
+		public function behaviors()
+		{
+			return [
+				
+				/*
+				 * 根据这个特色来设置的 即应该所有的管理员控制动作
+				 * 都需要已经登录的用户才可以进行设置
+				 * 未登录用户绝对不能对这个进行操作
+				 */
+				
+				'access'        =>  [
+					'class'     =>  AccessControl::className(),
+					'only'  =>  ['index', 'upload'],
+					'rules'     =>  [
+						
+						/**
+						 * 只有已经登录的用户才能退出
+						 */
+						[
+							'actions'   =>  ['index', 'upload'],
+							'allow'     =>  true,
+							//角色
+							'roles'     =>  ['@'],
+						],
+					],
+				], //access结束
+				
+			];
+		}
+		
 		/**
 		 * @return string
 		 */

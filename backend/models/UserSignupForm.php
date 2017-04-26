@@ -18,6 +18,7 @@ use Yii;
 use yii\base\Model;
 use common\models\User;
 
+
 /**
  * Class Usersignup
  * @package backend\models
@@ -36,7 +37,12 @@ class UserSignupForm extends Model
 	public $created_at;
 	public $updated_at;
 	
-    /**
+	public $value;// 自动补充的值，默认为time()
+	
+	
+	
+	
+	/**
      * @inheritdoc
      */
     public static function tableName()
@@ -76,6 +82,8 @@ class UserSignupForm extends Model
 	 */
 	public function signup()
 	{
+		
+		
 		if (!$this->validate()) {
 			return null;
 		}

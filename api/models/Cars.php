@@ -47,4 +47,19 @@ class Cars extends \yii\db\ActiveRecord
             'color' => 'Color',
         ];
     }
+	
+	/**
+	 * 过滤掉一些字段 一些敏感字段不适合抛出
+	 */
+    public function fields ()
+    {
+	   $fields = parent::fields();
+	   
+	   //删除一些字段
+	    unset($fields['color']);
+	    
+	    return $fields;
+    }
+	
+	
 }

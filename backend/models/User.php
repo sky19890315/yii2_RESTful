@@ -43,64 +43,48 @@ use yii\behaviors\TimestampBehavior;
 class User extends ActiveRecord implements IdentityInterface
 {
 	/**
-	 * @return array
-	 * 这个行为的作用是自动更新创建时间和更新时间
-	 * 因为我们要创建用户 当然不希望每个值都填充
-	 * 在插入数据库之前创建时间 更新时间
-	 * 在插入数据库之后更新时间
-	 * 当记录插入时， 行为将当前的 UNIX 时间戳赋值给 created_at 和 updated_at 属性；
-	 * 当记录更新时，行为将当前的 UNIX 时间戳赋值给 updated_at 属性。
-	 */
-	public function behaviors ()
-	{
-		return [
-			'class' =>  TimestampBehavior::className(),
-			'attributes' => [
-				ActiveRecord::EVENT_BEFORE_INSERT => ['created_at', 'updated_at'],
-				ActiveRecord::EVENT_BEFORE_UPDATE => ['updated_at'],
-			],
-		];
-	}
-	
-	
-	/**
 	 * @param bool $insert
 	 * @return bool
 	 *
 	 */
-	
-	/*
-	public $username = null;
-	public $auth_key;
-	public $password_hash;
-	public $status;
-	public $created_at;
-	public $updated_at;
-	public $api_token;
-	public $allowance = 5;
-	public $allowance_updated_at;
-	
-	public function __construct ()
-	{
-		if ($this->username === null) {
-			return null;
-		}
-		if (empty($this->auth_key)) {
-		$user = new \common\models\User();
-		$this->auth_key = $user->generateAuthKey();
-		$this->password_hash = $user->setPassword($this->password_hash);
-		$this->created_at = time();
-		$this->updated_at = time();
-		$this->allowance_updated_at = time();
-		$user->save(false);
-		}
-	}
-	*/
-	
-	
+	/**
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++==
+	 *
+	 * 注意 这是一个大坑 只针对前台用户用的
+	 * 生成的表作用与前台用户
+	 * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	 * 相当于一个构造函数 即其父类封装了构造函数
+	 * 通过在写入数据库之前进行插入
+	 * 可以对数据库进行写入前的操作
+	 * 比如有很多数据 是不需要用户去一一填写的
+	 * 这些数据可以作为属性值 进行赋予 2017-04-21
+	 * 因为之前的数据都是对数据库的一些操作
+	 * 凡是以下列出的都不需要在表单中填写
+	 */
 	public function beforeSave ($insert)
 	{
-	////修改修改
+		if (parent::beforeSave($insert)) {
+			
+			/**
+			 * 实例化系统自带的模型类
+			 * 用以调用其方法
+			 */
+			
+			$obj = new \common\models\User();
+			/*
+			 * 以下列出的都是自动生成的部分
+			 * 在数据写入数据库之前 这些将会执行
+			 */
+			 $this->created_at  = time();
+			 $this->updated_at  = time();
+			 $this->api_token   = $obj->generateApiToken();
+			 $this->auth_key    = $obj->generateAuthKey();
+			 $this->password_hash = $obj->setPassword('password_hash');
+		
+			 return true;
+		} else {
+			return false;
+		}
 	}
 	
 	/**
@@ -117,8 +101,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email'], 'required'],
-            [['status', 'created_at', 'updated_at', 'allowance', 'allowance_updated_at'], 'integer'],
+            [['username', 'password_hash', 'email'], 'required'],
+            [['status', 'allowance'], 'integer'],
             [['username', 'auth_key', 'password_hash', 'password_reset_token', 'email', 'api_token'], 'string', 'max' => 255],
             [['username'], 'unique'],
             [['email'], 'unique'],
@@ -147,7 +131,7 @@ class User extends ActiveRecord implements IdentityInterface
             'status' => '状态',
             'created_at' => '创建时间',
             'updated_at' => '更新时间',
-            'api_token' => '认证密钥',
+            'api_token' => 'API认证密钥',
             'allowance' => '剩余请求次数',
             'allowance_updated_at' => '请求更新时间',
         ];
@@ -197,4 +181,11 @@ class User extends ActiveRecord implements IdentityInterface
 	{
 		return $this->getAuthKey() === $authKey;
 	}
+	
+	
+	
+	
+	
+	
+	
 }

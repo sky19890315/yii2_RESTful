@@ -31,12 +31,12 @@
 		
 		<?= $form
 			->field($model, 'username', $fieldOptions1)
-			->label(false)
+			->label('用户名')
 			->textInput(['placeholder' => $model->getAttributeLabel('username')]) ?>
 		
 		<?= $form
 			->field($model, 'password', $fieldOptions2)
-			->label(false)
+			->label('密码')
 			->passwordInput(['placeholder' => $model->getAttributeLabel('password')]) ?>
 
         <div class="row">
@@ -46,8 +46,7 @@
             </div>
             <!-- /.col -->
         </div>
-		
-		
+        
 		<?php ActiveForm::end(); ?>
     </div>
     <!-- /.login-box-body -->

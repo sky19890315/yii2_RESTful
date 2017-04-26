@@ -58,6 +58,11 @@ use yii\filters\RateLimitInterface;
  *
  * 2017-04-17 开始接入请求频率限制接口
  * 频率请求接口里面只有三个接口 通通实现
+ *
+ * 2017-04-22 新增加appid自动生成的方法 可以做静态调用
+ * 该方法会按时间戳自动生成一个独一无二的appid
+ * 用来代替用户名 来做验证用户信息
+ *
  * +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
  */
 class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
@@ -65,7 +70,29 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
     const STATUS_DELETED = 0;
     const STATUS_ACTIVE = 10;
 	
-	
+	/**
+	 * @return string
+	 * 生成一组独特的appid作为用户登录的凭证
+	 * 用户名可以改 而这个appid作为用户的唯一标识  是固定不变且独一无二的
+	 */
+	public function generaterAppId()
+	{
+		/*
+		 * 获取当前时间戳
+		 * 将当前时间戳随机打乱
+		 * 将打乱的时间戳拼接到一个字符串
+		 * 保证生成的appid的唯一性
+		 * 果果做的一切都是为了保证产生的appid是唯一的
+		 * 因为要确保产生的appid是唯一 两次打乱加上时间戳是打乱的
+		 * 产生相同appid的几率几乎是零
+		 */
+		$date = time();
+		$shf = str_shuffle($date).rand(1, 9999);
+		return $this->appid = str_shuffle('pr'.str_shuffle($shf) );
+	}
+    
+    
+    
 	/**
 	 * @return string
 	 * 制定要查询的表  通过yii2 的特殊认证方法 取得user表名
@@ -224,11 +251,11 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
     /**
      * Generates password hash from password and sets it to the model
      *
-     * @param string $password
+     *
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+         return $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
@@ -236,7 +263,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
      */
     public function generateAuthKey()
     {
-        $this->auth_key = Yii::$app->security->generateRandomString();
+        return $this->auth_key = Yii::$app->security->generateRandomString();
     }
 
     /**
@@ -244,7 +271,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
      */
     public function generatePasswordResetToken()
     {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+        return $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 
     /**
@@ -252,7 +279,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
      */
     public function removePasswordResetToken()
     {
-        $this->password_reset_token = null;
+       return  $this->password_reset_token = null;
     }
 	
 	/**
@@ -262,7 +289,7 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
     public function generateApiToken()
     {
     	//拼接生成的api
-	    $this->api_token = Yii::$app->security->generateRandomString().'_'.time().'.'.'api.prmeasure.com';
+	    return $this->api_token = Yii::$app->security->generateRandomString().'/'.'http://api.prmeasure.com'.'/'.time();
     }
 	
 	/**
@@ -317,7 +344,12 @@ class User extends ActiveRecord implements IdentityInterface, RateLimitInterface
     public function saveAllowance ($request, $action, $allowance, $timestamp)
     {
     	$this->allowance = $allowance;
-    	$this->allowance_updated_at = $timestamp;
+    	$this->allowance_updated_at = time();
     	$this->save();
     }
+    
+    
+    
+    
+    
 }

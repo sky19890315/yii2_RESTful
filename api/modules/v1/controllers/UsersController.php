@@ -2,6 +2,7 @@
 
 namespace api\modules\v1\controllers;
 
+use Yii;
 use api\models\LoginForm;
 use common\models\User;
 use api\modules\v1\controllers\BaseController;
@@ -16,41 +17,10 @@ class UsersController extends BaseController
 {
 	public $modelClass = 'api\models\Users';
 	
-	public function behaviors() {
-		return ArrayHelper::merge (parent::behaviors(), [
-			'authenticator' => [
-				'class' => QueryParamAuth::className(),
-				'tokenParam' => 'token',
-				/**
-				 * 以下选项为可选 即不会要求立刻验证
-				 */
-			'optional' => [
-			'login',
-			'signup-test'
-			]
-		]
-		]);
-	}
-	
 	/**
 	 * @return array
 	 */
-	public function actionSignupTest ()
-	{
-		$user = new User();
-		$user->generateAuthKey();
-		$user->generateApiToken();
-		$user->setPassword('123456');
-		$user->username = '111';
-		$user->email = '111@111.com';
-		$user->created_at = date('Y-m-d H:i:s');
-		$user->updated_at = date('Y-m-d H:i:s');
-		$user->save(false);
-		
-		return [
-			'code' => 0
-		];
-	}
+	
 	
 	/**
 	 * @return array
@@ -67,20 +37,7 @@ class UsersController extends BaseController
 	 * 通过common\models\User的apiTokenIsValid校验token的有效性，如果无效，则调用User的generateApiToken方法重新生成
 	 *
 	 */
-	public function actionLogin ()
-	{
-		$model = new LoginForm;
-		$model->setAttributes(Yii::$app->request->post());
-		if ($user = $model->login()) {
-			if ($user instanceof IdentityInterface) {
-				return $user->api_token;
-			} else {
-				return $user->errors;
-			}
-		} else {
-			return $model->errors;
-		}
-	}
+
 	
 	
 }

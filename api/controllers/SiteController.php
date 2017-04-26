@@ -29,6 +29,8 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\auth\QueryParamAuth;
 use common\models\User;
+use yii\web\Response;
+use backend\models\UserSignupForm;
 
 /**
  * 2017-04-14 增加登录等功能 尽情debug把骚年
@@ -61,29 +63,51 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        \Yii::$app->response->format = \yii\web\Response::FORMAT_HTML;
+        \Yii::$app->response->format = Response::FORMAT_HTML;
         return $this->renderPartial('index');
         
     }
 	
-   
-	    
-	public function actionTest()
+	/**
+	 * @return string|Response
+	 * 自动登录页面
+	 */
+	public function actionLogin()
 	{
-		$user = new User();
-		$user->generateApiToken();
-		$user->generateAuthKey();
-		$user->username = 'test2017';
-		$user->setPassword('123456');
-		$user->email = '2017@qq.com';
-		$user->created_at = '20170101';
-		$user->updated_at = '20170101';
-		$user->save(false);
+		if (!Yii::$app->user->isGuest) {
+			 return $this->goHome();
+		}
 		
-		return [
-			'code' => 0,
-		];
+		$model = new LoginForm();
+		if ($model->load(Yii::$app->request->post()) && $model->login()) {
+			return $this->goBack();
+		} else {
+			
+			\Yii::$app->response->format = Response::FORMAT_HTML;
+			return $this->render('login', [
+				'model' => $model,
+			]);
+		}
 	}
+	
+	public function actionSignup()
+	{
+		$model = new UserSignupForm();
+		if ($model->load(Yii::$app->request->post())) {
+			if ($user = $model->signup()) {
+				if (Yii::$app->getUser()->login($user)) {
+					return $this->goHome();
+				}
+			}
+		}
+		
+		//调用登录视图
+		$this->layout = 'main-signup-user';
+		\Yii::$app->response->format = Response::FORMAT_HTML;
+		return $this->render('signup', ['model' => $model,]);
+	}
+	    
+
     	
     
    

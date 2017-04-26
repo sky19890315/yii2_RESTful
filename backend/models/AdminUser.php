@@ -17,11 +17,35 @@ use yii\db\ActiveRecord;
  * @property string $email
  * @property string $created_at
  * @property string $updated_at
+ * @property string $api_token
+ * @property integer $isAdmin
  * 调用接口来实现
  */
 class AdminUser extends ActiveRecord implements IdentityInterface
 {
-    /**
+	/**
+	 * @return string
+	 * 自动生成appid
+	 */
+	public function generaterAppId()
+	{
+		/*
+		 * 获取当前时间戳
+		 * 将当前时间戳随机打乱
+		 * 将打乱的时间戳拼接到一个字符串
+		 * 保证生成的appid的唯一性
+		 * 果果做的一切都是为了保证产生的appid是唯一的
+		 * 因为要确保产生的appid是唯一 两次打乱加上时间戳是打乱的
+		 * 产生相同appid的几率几乎是零
+		 */
+		$date = time();
+		$shf = str_shuffle($date).rand(1, 9999);
+		return $this->appid = str_shuffle('pr'.str_shuffle($shf) );
+	}
+	
+	
+	
+	/**
      * @inheritdoc
      */
     public static function tableName()
@@ -35,7 +59,14 @@ class AdminUser extends ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at', 'updated_at'], 'required'],
+            [['username',  'password_hash', 'email'], 'required'],
+	
+	        /**
+	         * 裁边是必须的 否则会造成不必要的麻烦
+	         */
+	        
+	        [['username', 'email'], 'trim'],
+	        
             [['created_at', 'updated_at'], 'safe'],
             [['username', 'password_hash', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -59,6 +90,9 @@ class AdminUser extends ActiveRecord implements IdentityInterface
             'email' => '邮箱',
             'created_at' => '创建时间',
             'updated_at' => '更新时间',
+	        'appid' =>  'AppId',
+            'api_token' => 'AppToken',
+            'isAdmin' => '用户身份',
         ];
     }
     
@@ -122,13 +156,13 @@ class AdminUser extends ActiveRecord implements IdentityInterface
 	}
 	
 	/**
-	 * @param $password
+	 *
 	 *
 	 * 用哈希算法加密
 	 */
 	public function setPassword($password)
 	{
-		$this->password_hash = Yii::$app->security->generatePasswordHash($password);
+		return $this->password_hash = Yii::$app->security->generatePasswordHash($password);
 	}
 	
 	//增加生成key
@@ -159,5 +193,37 @@ class AdminUser extends ActiveRecord implements IdentityInterface
 	{
 		return Yii::$app->security->validatePassword($password, $this->password_hash);
 	}
+	
+	/**
+	 * 生成密钥
+	 * @return string
+	 *
+	 * 静态属性不可以由对象通过 -> 操作符来访问。
+	 */
+	public function generateApiToken()
+	{
+		//拼接生成的api
+		return $this->api_token = Yii::$app->security->generateRandomString().'/'.'http://api.prmeasure.com'.'/'.time();
+	}
+	
+	/**
+	 * 检验token是否有效
+	 * @param $token
+	 * @return bool
+	 */
+	public static function apiTokenIsValid($token)
+	{
+		if (empty($token)){
+			return false;
+		}
+		
+		//强制转换成整型 返回首次出现下划线的位置
+		$timestamp = (int) substr($token, strripos($token, '_') +1);
+		$expire = Yii::$app->params['user.apiTokenExpire'];
+		
+		return $timestamp + $expire >= time();
+	}
+	
+	
 	
 }

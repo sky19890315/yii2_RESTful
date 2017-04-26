@@ -22,6 +22,8 @@ use yii\data\ActiveDataProvider;
 use backend\models\UserSignupForm;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\filters\AccessControl;
+
 
 /**
  * 为了实现添加授权用户
@@ -37,18 +39,51 @@ class UserController extends Controller
 {
 	
 	/**
+	 * @return array
+	 * 这个行为的作用是自动更新创建时间和更新时间
+	 * 因为我们要创建用户 当然不希望每个值都填充
+	 * 在插入数据库之前创建时间 更新时间
+	 * 在插入数据库之后更新时间
+	 * 当记录插入时， 行为将当前的 UNIX 时间戳赋值给 created_at 和 updated_at 属性；
+	 * 当记录更新时，行为将当前的 UNIX 时间戳赋值给 updated_at 属性。
+	 */
+	/**
 	 * @inheritdoc
 	 *
 	 * 对行为进行过滤 对于删除用户的方法 只允许使用 post 提交 以避免误删
-	 * 叶
+	 * 增加普通用户访问权限 普通用户 没有登录 是无法访问以下的动作的
 	 */
 	public function behaviors()
 	{
 		return [
+			
+			/*
+			 * 根据这个特色来设置的 即应该所有的管理员控制动作
+			 * 都需要已经登录的用户才可以进行设置
+			 * 未登录用户绝对不能对这个进行操作
+			 */
+			
+			'access'        =>  [
+				'class'     =>  AccessControl::className(),
+				'only'  =>  ['index', 'create','update','delete', 'view'],
+				'rules'     =>  [
+					
+					/**
+					 * 只有已经登录的用户才能退出
+					 */
+					[
+						'actions'   =>  ['index', 'create','update','delete', 'view'],
+						'allow'     =>  true,
+						//角色
+						'roles'     =>  ['@'],
+					],
+				],
+			], //access结束
+			
 			'verbs' => [
 				'class' => VerbFilter::className(),
 				'actions' => [
-					'delete' => ['POST'],
+					'create, update, delete' => ['POST'],
 				],
 			],
 		];
@@ -116,12 +151,22 @@ class UserController extends Controller
 	public function actionCreate()
 	{
 		$model = new User();
+		
+		/**
+		 * 读取默认值
+		 * 你的表列也许定义了默认值。有时候，你可能需要在使用web表单的时候给AR预设一些值。
+		 * 如果你需要这样做，可以在显示表单内容前通过调用loadDefaultValues()方法来实现：
+		 */
+		$model->loadDefaultValues();
+		
+		
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			return $this->redirect(['view', 'id' => $model->id]);
 		} else {
 			return $this->render('create', [
-				'model' => $model,
+				'model'     => $model,
 			]);
+			
 		}
 	}
 	/**
